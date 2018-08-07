@@ -1,6 +1,6 @@
 <?php
 
-namespace Xlab\pChartBundle\DependencyInjection;
+namespace Webklex\pChart\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

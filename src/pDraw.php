@@ -13,7 +13,7 @@
      You can find the whole class documentation on the pChart web site.
  */
 
-namespace Xlab\pChartBundle;
+namespace Webklex\pChart;
 
  define("DIRECTION_VERTICAL"		, 690001);
  define("DIRECTION_HORIZONTAL"		, 690002);
@@ -774,7 +774,7 @@ namespace Xlab\pChartBundle;
 
        if ( $Ticks == NULL )
         {
-         $Points   = ""; 
+         $Points   = []; 
          $Points[] = cos(deg2rad($Angle-90)) * $Weight + $X1; $Points[] = sin(deg2rad($Angle-90)) * $Weight + $Y1;
          $Points[] = cos(deg2rad($Angle+90)) * $Weight + $X1; $Points[] = sin(deg2rad($Angle+90)) * $Weight + $Y1;
          $Points[] = cos(deg2rad($Angle+90)) * $Weight + $X2; $Points[] = sin(deg2rad($Angle+90)) * $Weight + $Y2;
@@ -789,7 +789,7 @@ namespace Xlab\pChartBundle;
            $Xa = (($X2-$X1)/$Distance) * $i + $X1; $Ya = (($Y2-$Y1)/$Distance) * $i + $Y1;
            $Xb = (($X2-$X1)/$Distance) * ($i+$Ticks) + $X1; $Yb = (($Y2-$Y1)/$Distance) * ($i+$Ticks) + $Y1;
 
-           $Points   = ""; 
+           $Points   = []; 
            $Points[] = cos(deg2rad($Angle-90)) * $Weight + $Xa; $Points[] = sin(deg2rad($Angle-90)) * $Weight + $Ya;
            $Points[] = cos(deg2rad($Angle+90)) * $Weight + $Xa; $Points[] = sin(deg2rad($Angle+90)) * $Weight + $Ya;
            $Points[] = cos(deg2rad($Angle+90)) * $Weight + $Xb; $Points[] = sin(deg2rad($Angle+90)) * $Weight + $Yb;
@@ -1335,7 +1335,7 @@ namespace Xlab\pChartBundle;
        $TailX2 = cos(($Angle-180)*PI/180)*$Size+$X1;
        $TailY2 = sin(($Angle-180)*PI/180)*$Size+$Y1;
 
-       $Points   = "";
+       $Points   = [];
        $Points[] = $X1; $Points[]  = $Y1;
        $Points[] = cos(($Angle-90)*PI/180)*$Size*$Ratio+$TailX2; $Points[] = sin(($Angle-90)*PI/180)*$Size*$Ratio+$TailY2;
        $Points[] = cos(($Angle-270)*PI/180)*$Size*$Ratio+$TailX2; $Points[] = sin(($Angle-270)*PI/180)*$Size*$Ratio+$TailY2;
@@ -1541,7 +1541,7 @@ namespace Xlab\pChartBundle;
 
      $X=100; $Y=100;
 
-     $Boundaries = ""; $Boundaries["L"] = $X; $Boundaries["T"] = $Y; $Boundaries["R"] = 0; $Boundaries["B"] = 0; $vY = $Y; $vX = $X;
+     $Boundaries = []; $Boundaries["L"] = $X; $Boundaries["T"] = $Y; $Boundaries["R"] = 0; $Boundaries["B"] = 0; $vY = $Y; $vX = $X;
      foreach($Data["Series"] as $SerieName => $Serie)
       {
        if ( $Serie["isDrawable"] == TRUE && $SerieName != $Data["Abscissa"] )
@@ -1560,7 +1560,7 @@ namespace Xlab\pChartBundle;
          elseif ( $Mode == LEGEND_HORIZONTAL )
           {
            $Lines = preg_split("/\n/",$Serie["Description"]);
-           $Width = "";
+           $Width = [];
            foreach($Lines as $Key => $Value)
             {
              $BoxArray = $this->getTextBox($vX+$IconAreaWidth+6,$Y+$IconAreaHeight/2+(($this->FontSize+3)*$Key),$FontName,$FontSize,0,$Value);
@@ -1631,7 +1631,7 @@ namespace Xlab\pChartBundle;
      $XStep = $IconAreaWidth + 5;
      $XStep = $XSpacing;
 
-     $Boundaries = ""; $Boundaries["L"] = $X; $Boundaries["T"] = $Y; $Boundaries["R"] = 0; $Boundaries["B"] = 0; $vY = $Y; $vX = $X;
+     $Boundaries = []; $Boundaries["L"] = $X; $Boundaries["T"] = $Y; $Boundaries["R"] = 0; $Boundaries["B"] = 0; $vY = $Y; $vX = $X;
      foreach($Data["Series"] as $SerieName => $Serie)
       {
        if ( $Serie["isDrawable"] == TRUE && $SerieName != $Data["Abscissa"] )
@@ -1650,7 +1650,7 @@ namespace Xlab\pChartBundle;
          elseif ( $Mode == LEGEND_HORIZONTAL )
           {
            $Lines = preg_split("/\n/",$Serie["Description"]);
-           $Width = "";
+           $Width = [];
            foreach($Lines as $Key => $Value)
             {
              $BoxArray = $this->getTextBox($vX+$IconAreaWidth+6,$Y+$IconAreaHeight/2+(($this->FontSize+3)*$Key),$FontName,$FontSize,0,$Value);
@@ -1725,7 +1725,7 @@ namespace Xlab\pChartBundle;
          elseif ( $Mode == LEGEND_HORIZONTAL )
           {
            $Lines = preg_split("/\n/",$Serie["Description"]);
-           $Width = "";
+           $Width = [];
            foreach($Lines as $Key => $Value)
             {
              $BoxArray = $this->drawText($X+$IconAreaWidth+4,$Y+$IconAreaHeight/2+(($this->FontSize+3)*$Key),$Value,array("R"=>$FontR,"G"=>$FontG,"B"=>$FontB,"Align"=>TEXT_ALIGN_MIDDLELEFT,"FontSize"=>$FontSize,"FontName"=>$FontName));
@@ -1867,7 +1867,7 @@ namespace Xlab\pChartBundle;
         }
        elseif ( $Mode == SCALE_MODE_ADDALL || $Mode == SCALE_MODE_ADDALL_START0 )
         {
-         $Series = "";
+         $Series = [];
          foreach($Data["Series"] as $SerieID => $SerieParameter)
           { if ( $SerieParameter["Axis"] == $AxisID && $SerieParameter["isDrawable"] && $Data["Abscissa"] != $SerieID ) { $Series[$SerieID] = count($Data["Series"][$SerieID]["Data"]); } }
 
@@ -2499,12 +2499,13 @@ namespace Xlab\pChartBundle;
    function computeScale($XMin,$XMax,$MaxDivs,$Factors,$AxisID=0)
     {
      /* Compute each factors */
-     $Results = "";
-     foreach ($Factors as $Key => $Factor)
-      $Results[$Factor] = $this->processScale($XMin,$XMax,$MaxDivs,array($Factor),$AxisID);
+     $Results = [];
+     foreach ($Factors as $Key => $Factor){
+         $Results[$Factor] = $this->processScale($XMin,$XMax,$MaxDivs,array($Factor),$AxisID);
+     }
 
      /* Remove scales that are creating to much decimals */
-     $GoodScaleFactors = "";
+     $GoodScaleFactors = [];
      foreach ($Results as $Key => $Result)
       {
        $Decimals = preg_split("/\./",$Result["RowHeight"]);
@@ -2512,7 +2513,7 @@ namespace Xlab\pChartBundle;
       }
 
      /* Found no correct scale, shame,... returns the 1st one as default */
-     if ( $GoodScaleFactors == "" ) { return($Results[$Factors[0]]); }
+     if ( empty($GoodScaleFactors)) { return($Results[$Factors[0]]); }
 
      /* Find the factor that cause the maximum number of Rows */
      $MaxRows = 0; $BestFactor = 0;
@@ -2538,7 +2539,7 @@ namespace Xlab\pChartBundle;
      else
       $Mode = AXIS_FORMAT_DEFAULT;
 
-     $Scale = "";
+     $Scale = [];
      if ( $XMin != $XMax )
       {
        $Found = FALSE; $Rescaled = FALSE; $Scaled10Factor = .0001; $Result = 0;
@@ -3094,9 +3095,9 @@ namespace Xlab\pChartBundle;
      if ( !isset($Data["Axis"][$AxisID]) ) { return(-1); }
 
      if ( $SerieName != NULL ) { $AxisID = $Data["Series"][$SerieName]["Axis"]; }
-     if ( !is_array($Values) ) { $tmp = $Values; $Values = ""; $Values[0] = $tmp; }
+     if ( !is_array($Values) ) { $Values= [$tmp]; }
 
-     $Result = "";
+     $Result = [];
      if ( $Data["Orientation"] == SCALE_POS_LEFTRIGHT )
       {
        $Height      = ($this->GraphAreaY2 - $this->GraphAreaY1) - $Data["Axis"][$AxisID]["Margin"]*2;
@@ -3376,7 +3377,7 @@ namespace Xlab\pChartBundle;
            if ( $Picture != NULL ) { $PicOffset = $PicHeight / 2; $SerieWeight = 0; }
            $X = $this->GraphAreaX1 + $XMargin;
 
-           if ( !is_array($PosArray) ) { $Value = $PosArray; $PosArray = ""; $PosArray[0] = $Value; }
+           if ( !is_array($PosArray) ) { $PosArray = [$Value]; }
            foreach($PosArray as $Key => $Y)
             {
              if ( $DisplayValues ) 
@@ -3400,7 +3401,7 @@ namespace Xlab\pChartBundle;
            if ( $Picture != NULL ) { $PicOffset = $PicWidth / 2; $SerieWeight = 0; }
            $Y = $this->GraphAreaY1 + $XMargin;
 
-           if ( !is_array($PosArray) ) { $Value = $PosArray; $PosArray = ""; $PosArray[0] = $Value; }
+           if ( !is_array($PosArray) ) {$PosArray = [$Value]; }
            foreach($PosArray as $Key => $X)
             {
              if ( $DisplayValues ) 

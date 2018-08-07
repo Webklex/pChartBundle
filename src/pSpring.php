@@ -12,7 +12,7 @@
 
      You can find the whole class documentation on the pChart web site.
  */
-namespace Xlab\pChartBundle;
+namespace Webklex\pChart;
 
  define("NODE_TYPE_FREE"	, 690001);
  define("NODE_TYPE_CENTRAL"	, 690002);

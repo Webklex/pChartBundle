@@ -12,7 +12,7 @@
 
      You can find the whole class documentation on the pChart web site.
  */
-namespace Xlab\pChartBundle;
+namespace Webklex\pChart;
 
  define("INDICATOR_CAPTION_DEFAULT"	, 700001);
  define("INDICATOR_CAPTION_EXTENDED"	, 700002);

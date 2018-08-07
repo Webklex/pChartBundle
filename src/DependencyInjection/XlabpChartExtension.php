@@ -1,6 +1,6 @@
 <?php
 
-namespace Xlab\pChartBundle\DependencyInjection;
+namespace Webklex\pChart\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

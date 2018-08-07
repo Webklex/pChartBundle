@@ -13,7 +13,7 @@
      You can find the whole class documentation on the pChart web site.
  */
 
-namespace Xlab\pChartBundle;
+namespace Webklex\pChart;
 
  /* pData class definition */
  class pBarcode128

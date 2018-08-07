@@ -8,14 +8,14 @@
   * file that was distributed with this source code.
   */
 
-namespace Xlab\pChartBundle\Controller;
+namespace Webklex\pChart\Controller;
 
-use Xlab\pChartBundle\pData;
-use Xlab\pChartBundle\pDraw;
-use Xlab\pChartBundle\pPie;
-use Xlab\pChartBundle\pImage;
-use Xlab\pChartBundle\pBarcode39;
-use Xlab\pChartBundle\pBarcode128;
+use Webklex\pChart\pData;
+use Webklex\pChart\pDraw;
+use Webklex\pChart\pPie;
+use Webklex\pChart\pImage;
+use Webklex\pChart\pBarcode39;
+use Webklex\pChart\pBarcode128;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -35,7 +35,7 @@ class ExamplesController extends Controller
    */
   public function indexAction()
   {
-      return $this->render('XlabpChartBundle:Examples:index.html.twig');
+      return $this->render('pChartBundle:Examples:index.html.twig');
   }
 
   /**
@@ -80,7 +80,7 @@ class ExamplesController extends Controller
         break;
     }
 
-    return $this->render('XlabpChartBundle:Examples:view.html.twig', array('number' => $number, "title" => $title));
+    return $this->render('pChartBundle:Examples:view.html.twig', array('number' => $number, "title" => $title));
   }
 
   /**

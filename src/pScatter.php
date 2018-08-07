@@ -13,7 +13,7 @@
      You can find the whole class documentation on the pChart web site.
  */
 
-namespace Xlab\pChartBundle;
+namespace Webklex\pChart;
 
  define("SCATTER_MISSING_X_SERIE"	, 190001);
  define("SCATTER_MISSING_Y_SERIE"	, 190002);
@@ -82,7 +82,7 @@ namespace Xlab\pChartBundle;
 
      /* Check if we have at least both one X and Y axis */
      $GotXAxis = FALSE; $GotYAxis = FALSE;
-     foreach($this->pDataObject->Data["Axis"] as $AxisID => $AxisSettings)
+     foreach($this->pDataObject->data["Axis"] as $AxisID => $AxisSettings)
       {
        if ( $AxisSettings["Identity"] == AXIS_X ) { $GotXAxis = TRUE; }
        if ( $AxisSettings["Identity"] == AXIS_Y ) { $GotYAxis = TRUE; }
@@ -219,7 +219,7 @@ namespace Xlab\pChartBundle;
              $Bounds = $this->pChartObject->drawText($XPos,$YPos,$AxisSettings["Name"],array("Align"=>TEXT_ALIGN_TOPMIDDLE));
              $MaxBottom = $Bounds[0]["Y"];
 
-             $this->pDataObject->Data["GraphArea"]["Y2"] = $MaxBottom + $this->pChartObject->FontSize;
+             $this->pDataObject->data["GraphArea"]["Y2"] = $MaxBottom + $this->pChartObject->FontSize;
             }
 
            $AxisPos["B"] = $MaxBottom + $ScaleSpacing;
@@ -270,7 +270,7 @@ namespace Xlab\pChartBundle;
              $Bounds = $this->pChartObject->drawText($XPos,$YPos,$AxisSettings["Name"],array("Align"=>TEXT_ALIGN_BOTTOMMIDDLE));
              $MinTop = $Bounds[2]["Y"];
 
-             $this->pDataObject->Data["GraphArea"]["Y1"] = $MinTop;
+             $this->pDataObject->data["GraphArea"]["Y1"] = $MinTop;
             }
 
            $AxisPos["T"] = $MinTop - $ScaleSpacing;
@@ -320,7 +320,7 @@ namespace Xlab\pChartBundle;
              $Bounds  = $this->pChartObject->drawText($XPos,$YPos,$AxisSettings["Name"],array("Align"=>TEXT_ALIGN_BOTTOMMIDDLE,"Angle"=>90));
              $MinLeft = $Bounds[2]["X"];
 
-             $this->pDataObject->Data["GraphArea"]["X1"] = $MinLeft;
+             $this->pDataObject->data["GraphArea"]["X1"] = $MinLeft;
             }
 
            $AxisPos["L"] = $MinLeft - $ScaleSpacing;
@@ -367,7 +367,7 @@ namespace Xlab\pChartBundle;
              $Bounds  = $this->pChartObject->drawText($XPos,$YPos,$AxisSettings["Name"],array("Align"=>TEXT_ALIGN_BOTTOMMIDDLE,"Angle"=>270));
              $MaxLeft = $Bounds[2]["X"];
 
-             $this->pDataObject->Data["GraphArea"]["X2"] = $MaxLeft + $this->pChartObject->FontSize;
+             $this->pDataObject->data["GraphArea"]["X2"] = $MaxLeft + $this->pChartObject->FontSize;
             }
 
            $AxisPos["R"] = $MaxLeft + $ScaleSpacing;
@@ -563,7 +563,7 @@ namespace Xlab\pChartBundle;
        $ScaleHeight = $Data["Axis"][$AxisID]["ScaleMax"] - $Data["Axis"][$AxisID]["ScaleMin"];
        $Step        = $Height / $ScaleHeight;
 
-       $Result = "";
+       $Result = [];
        foreach($Values as $Key => $Value)
         {
          if ( $Value == VOID ) 
@@ -580,7 +580,7 @@ namespace Xlab\pChartBundle;
        $ScaleHeight = $Data["Axis"][$AxisID]["ScaleMax"] - $Data["Axis"][$AxisID]["ScaleMin"];
        $Step        = $Height / $ScaleHeight;
 
-       $Result = "";
+          $Result = [];
        foreach($Values as $Key => $Value)
         {
          if ( $Value == VOID ) 

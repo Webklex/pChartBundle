@@ -12,7 +12,7 @@
 
      You can find the whole class documentation on the pChart web site.
  */
-namespace Xlab\pChartBundle;
+namespace Webklex\pChart;
 
  /* The GD extension is mandatory */
  if (!extension_loaded('gd') && !extension_loaded('gd2'))
