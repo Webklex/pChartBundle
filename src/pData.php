@@ -1230,7 +1230,7 @@ namespace Webklex\pChart;
          }
 
          $this->addPoints($result, $serie_name);
-         
+
          if ( $auto_description ) { 
              $this->setSerieDescription($serie_name, $formula); 
          }
