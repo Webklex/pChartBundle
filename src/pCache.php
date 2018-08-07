@@ -93,7 +93,7 @@ namespace Webklex\pChart;
    /* Remove with specified criterias */
    function dbRemoval($Settings)
     {
-     $ID     = isset($Settings["Name"]) ? $Settings["Name"] : NULL;
+     $ID     = isset($Settings["Name"]) ? $Settings["Name"] : null;
      $Expiry = isset($Settings["Expiry"]) ? $Settings["Expiry"] : -(24*60*60);
      $TS     = time()-$Expiry;
 
@@ -104,13 +104,13 @@ namespace Webklex\pChart;
      $IndexTemp    = $this->CacheFolder."/".$this->CacheIndex.".tmp";
 
      /* Single file removal */
-     if ( $ID != NULL )
+     if ( $ID != null )
       {
        /* Retrieve object informations */
-       $Object = $this->isInCache($ID,TRUE);
+       $Object = $this->isInCache($ID,true);
 
        /* If it's not in the cache DB, go away */
-       if ( !$Object ) { return(0); }
+       if ( !$Object ) { return 0; }
       }
 
      /* Create the temporary files */
@@ -166,7 +166,7 @@ namespace Webklex\pChart;
      rename($IndexTemp,$Index);
     }
 
-   function isInCache($ID,$Verbose=FALSE,$UpdateHitsCount=FALSE)
+   function isInCache($ID,$Verbose=false,$UpdateHitsCount=false)
     {
      /* Compute the paths */
      $Index = $this->CacheFolder."/".$this->CacheIndex;
@@ -204,14 +204,14 @@ namespace Webklex\pChart;
            if ($Verbose)
             { return(array("DBPos"=>$DBPos,"PicSize"=>$PicSize,"GeneratedTS"=>$GeneratedTS,"Hits"=>$Hits)); }
            else
-            { return(TRUE); }
+            { return(true); }
           }
         }
       }
      fclose($Handle);
 
      /* Picture isn't in the cache */
-     return(FALSE);
+     return false;
     }
 
    /* Automatic output method based on the calling interface */
@@ -229,12 +229,12 @@ namespace Webklex\pChart;
      $Picture = $this->getFromCache($ID);
 
      /* Do we have a hit? */
-     if ( $Picture == NULL ) { return(FALSE); }
+     if ( $Picture == null ) { return(false); }
 
      header('Content-type: image/png');
      echo $Picture;
 
-     return(TRUE);
+     return true;
     }
 
    function saveFromCache($ID,$Destination)
@@ -243,7 +243,7 @@ namespace Webklex\pChart;
      $Picture = $this->getFromCache($ID);
 
      /* Do we have a hit? */
-     if ( $Picture == NULL ) { return(FALSE); }
+     if ( $Picture == null ) { return(false); }
 
      /* Flush the picture to a file */
      $Handle = fopen($Destination,"w");
@@ -251,7 +251,7 @@ namespace Webklex\pChart;
      fclose($Handle);
 
      /* All went fine */
-     return(TRUE);
+     return true;
     }
 
    function getFromCache($ID)
@@ -260,10 +260,10 @@ namespace Webklex\pChart;
      $Database = $this->CacheFolder."/".$this->CacheDB;
 
      /* Lookup for the picture in the cache */
-     $CacheInfo = $this->isInCache($ID,TRUE,TRUE);
+     $CacheInfo = $this->isInCache($ID,true,true);
 
      /* Not in the cache */
-     if (!$CacheInfo) { return(NULL); }
+     if (!$CacheInfo) { return null; }
 
      /* Get the database extended information */     
      $DBPos   = $CacheInfo["DBPos"];
@@ -276,7 +276,7 @@ namespace Webklex\pChart;
      fclose($Handle);
 
      /* Return back the raw picture data */
-     return($Picture);
+     return $Picture;
     }
   }
 ?>

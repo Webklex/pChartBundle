@@ -35,7 +35,7 @@ namespace Webklex\pChart;
      $Spacing		= isset($Format["Spacing"]) ? $Format["Spacing"] : 20;
      $TextPadding	= isset($Format["TextPadding"]) ? $Format["TextPadding"] : 2;
      $TextPos		= isset($Format["TextPos"]) ? $Format["TextPos"] : TEXT_POS_TOP;
-     $Surrounding       = isset($Format["Surrounding"]) ? $Format["Surrounding"] : NULL;
+     $Surrounding       = isset($Format["Surrounding"]) ? $Format["Surrounding"] : null;
      $Force		= isset($Format["Force"]) ? $Format["Force"] : 70;
      $Segments		= isset($Format["Segments"]) ? $Format["Segments"] : 15;
      $FontSize		= $Object->FontSize;
@@ -94,7 +94,7 @@ namespace Webklex\pChart;
        $RightY1 = $RightY + $Spacing;
        $RightY2 = $RightY + $Spacing + $Value * $YScale;;
 
-       $Settings = array("R"=>$Palette[$Key]["R"],"G"=>$Palette[$Key]["G"],"B"=>$Palette[$Key]["B"],"Alpha"=>$Palette[$Key]["Alpha"],"NoDraw"=>TRUE,"Segments"=>$Segments,"Surrounding"=>$Surrounding);
+       $Settings = array("R"=>$Palette[$Key]["R"],"G"=>$Palette[$Key]["G"],"B"=>$Palette[$Key]["B"],"Alpha"=>$Palette[$Key]["Alpha"],"NoDraw"=>true,"Segments"=>$Segments,"Surrounding"=>$Surrounding);
 
        $PolyGon = "";
 

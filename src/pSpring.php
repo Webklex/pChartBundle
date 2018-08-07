@@ -59,7 +59,7 @@ namespace Webklex\pChart;
      $this->Default["BorderG"]		= 0;
      $this->Default["BorderB"]		= 0;
      $this->Default["BorderAlpha"]	= 100;
-     $this->Default["Surrounding"]	= NULL;
+     $this->Default["Surrounding"]	= null;
      $this->Default["BackgroundR"]	= 255;
      $this->Default["BackgroundG"]	= 255;
      $this->Default["BackgroundB"]	= 255;
@@ -80,7 +80,7 @@ namespace Webklex\pChart;
      $this->Labels["B"]			= 0;
      $this->Labels["Alpha"]		= 100;
 
-     $this->AutoComputeFreeZone         = FALSE;
+     $this->AutoComputeFreeZone         = false;
     }
 
    /* Set default links options */
@@ -119,15 +119,15 @@ namespace Webklex\pChart;
    /* Set link properties */
    function linkProperties($FromNode,$ToNode,$Settings)
     {
-     if ( !isset($this->Data[$FromNode]) ) { return(0); }
-     if ( !isset($this->Data[$ToNode]) )   { return(0); }
+     if ( !isset($this->Data[$FromNode]) ) { return 0; }
+     if ( !isset($this->Data[$ToNode]) )   { return 0; }
 
      $R			= isset($Settings["R"]) ? $Settings["R"] : 0;
      $G			= isset($Settings["G"]) ? $Settings["G"] : 0;
      $B			= isset($Settings["B"]) ? $Settings["B"] : 0;
      $Alpha		= isset($Settings["Alpha"]) ? $Settings["Alpha"] : 100;
-     $Name		= isset($Settings["Name"]) ? $Settings["Name"] : NULL;
-     $Ticks		= isset($Settings["Ticks"]) ? $Settings["Ticks"] : NULL;
+     $Name		= isset($Settings["Name"]) ? $Settings["Name"] : null;
+     $Ticks		= isset($Settings["Ticks"]) ? $Settings["Ticks"] : null;
 
      $this->Links[$FromNode][$ToNode]["R"] = $R;         $this->Links[$ToNode][$FromNode]["R"] = $R;
      $this->Links[$FromNode][$ToNode]["G"] = $G;         $this->Links[$ToNode][$FromNode]["G"] = $G;
@@ -162,10 +162,10 @@ namespace Webklex\pChart;
    function addNode($NodeID,$Settings="")
     {
      /* if the node already exists, ignore */
-     if (isset($this->Data[$NodeID])) { return(0); }
+     if (isset($this->Data[$NodeID])) { return 0; }
 
      $Name		= isset($Settings["Name"]) ? $Settings["Name"] : "Node ".$NodeID;
-     $Connections	= isset($Settings["Connections"]) ? $Settings["Connections"] : NULL;
+     $Connections	= isset($Settings["Connections"]) ? $Settings["Connections"] : null;
 
      $R			= isset($Settings["R"]) ? $Settings["R"] : $this->Default["R"];
      $G			= isset($Settings["G"]) ? $Settings["G"] : $this->Default["G"];
@@ -186,7 +186,7 @@ namespace Webklex\pChart;
      $Shape		= isset($Settings["Shape"]) ? $Settings["Shape"] : $this->Default["Shape"];
      $FreeZone		= isset($Settings["FreeZone"]) ? $Settings["FreeZone"] : $this->Default["FreeZone"];
 
-     if ( $Surrounding != NULL ) { $BorderR = $R + $Surrounding; $BorderG = $G + $Surrounding; $BorderB = $B + $Surrounding; }
+     if ( $Surrounding != null ) { $BorderR = $R + $Surrounding; $BorderG = $G + $Surrounding; $BorderB = $B + $Surrounding; }
 
      $this->Data[$NodeID]["R"] = $R; $this->Data[$NodeID]["G"] = $G; $this->Data[$NodeID]["B"] = $B; $this->Data[$NodeID]["Alpha"] = $Alpha;
      $this->Data[$NodeID]["BorderR"] = $BorderR; $this->Data[$NodeID]["BorderG"] = $BorderG; $this->Data[$NodeID]["BorderB"] = $BorderB; $this->Data[$NodeID]["BorderAlpha"] = $BorderAlpha;
@@ -197,7 +197,7 @@ namespace Webklex\pChart;
      $this->Data[$NodeID]["Size"]		= $Size;
      $this->Data[$NodeID]["Shape"]		= $Shape;
      $this->Data[$NodeID]["FreeZone"]		= $FreeZone;
-     if ( $Connections != NULL )
+     if ( $Connections != null )
       {
        if ( is_array($Connections ) )
         {
@@ -254,7 +254,7 @@ namespace Webklex\pChart;
      if ( isset($this->Data[$SourceID]["Connections"]) )
       {
        foreach ($this->Data[$SourceID]["Connections"] as $Key => $ConnectionID)
-        { if ( $TargetID == $ConnectionID ) { return(TRUE); } }
+        { if ( $TargetID == $ConnectionID ) { return(true); } }
       }
      $this->Data[$SourceID]["Connections"][] = $TargetID;
     }
@@ -274,7 +274,7 @@ namespace Webklex\pChart;
           }
         }
       }
-     return(array("X"=>$X/$Cpt,"Y"=>$Y/$Cpt));
+     return array("X"=>$X/$Cpt,"Y"=>$Y/$Cpt);
     }
 
    /* Return the ID of the attached partner with the biggest weight */
@@ -288,7 +288,7 @@ namespace Webklex\pChart;
        if ( $this->Data[$PeerID]["Weight"] > $MaxWeight )
         { $MaxWeight = $this->Data[$PeerID]["Weight"]; $Result = $PeerID; }
       }
-     return($Result);
+     return $Result;
     }
 
    /* Do the initial node positions computing pass */
@@ -366,7 +366,7 @@ namespace Webklex\pChart;
                  $Ring          = $this->Data[$BiggestPartner]["FreeZone"];
                  $Weight        = $this->Data[$BiggestPartner]["Weight"];
                  $AngleDivision = 360 / $this->Data[$BiggestPartner]["Weight"];
-                 $Done          = FALSE; $Tries = 0;
+                 $Done          = false; $Tries = 0;
                  while (!$Done && $Tries <= $Weight*2)
                   {
                    $Tries++;
@@ -374,7 +374,7 @@ namespace Webklex\pChart;
                    if ( !isset($this->Data[$BiggestPartner]["Angular"][$Angle]) || !isset($this->Data[$BiggestPartner]["Angular"]) )
                     {
                      $this->Data[$BiggestPartner]["Angular"][$Angle] = $Angle;
-                     $Done = TRUE; 
+                     $Done = true;
                     }
                   }
                  if ( !$Done )
@@ -596,7 +596,7 @@ namespace Webklex\pChart;
           }
         }
       }
-     return($Conflicts/2);
+     return $Conflicts/2;
     }
 
    /* Center the graph */
@@ -644,9 +644,9 @@ namespace Webklex\pChart;
      $this->MagneticForceA	= isset($Settings["MagneticForceA"]) ? $Settings["MagneticForceA"] : 1.5;
      $this->MagneticForceR	= isset($Settings["MagneticForceR"]) ? $Settings["MagneticForceR"] : 2;
      $this->RingSize		= isset($Settings["RingSize"]) ? $Settings["RingSize"] : 40;
-     $DrawVectors		= isset($Settings["DrawVectors"]) ? $Settings["DrawVectors"] : FALSE;
-     $DrawQuietZone		= isset($Settings["DrawQuietZone"]) ? $Settings["DrawQuietZone"] : FALSE;
-     $CenterGraph		= isset($Settings["CenterGraph"]) ? $Settings["CenterGraph"] : TRUE;
+     $DrawVectors		= isset($Settings["DrawVectors"]) ? $Settings["DrawVectors"] : false;
+     $DrawQuietZone		= isset($Settings["DrawQuietZone"]) ? $Settings["DrawQuietZone"] : false;
+     $CenterGraph		= isset($Settings["CenterGraph"]) ? $Settings["CenterGraph"] : true;
      $TextPadding		= isset($Settings["TextPadding"]) ? $Settings["TextPadding"] : 4;
      $Algorithm			= isset($Settings["Algorithm"]) ? $Settings["Algorithm"] : ALGORITHM_WEIGHTED;
 
@@ -710,7 +710,7 @@ namespace Webklex\pChart;
              $X2 = $this->Data[$NodeID]["X"];
              $Y2 = $this->Data[$NodeID]["Y"];
              $this->pChartObject->drawLine($X,$Y,$X2,$Y2,$Color);
-             $Drawn[$Key][$NodeID] = TRUE;
+             $Drawn[$Key][$NodeID] = true;
 
              if ( isset($this->Links) && $this->Links != "" )
               {
@@ -792,12 +792,12 @@ namespace Webklex\pChart;
          elseif ( $this->Labels["Type"] == LABEL_CLASSIC )
           {
            $LabelOptions["Align"]         = TEXT_ALIGN_TOPMIDDLE;
-           $LabelOptions["DrawBox"]       = TRUE;
+           $LabelOptions["DrawBox"]       = true;
            $LabelOptions["BoxAlpha"]      = 50;
            $LabelOptions["BorderOffset"]  = 4;
            $LabelOptions["RoundedRadius"] = 3;
-           $LabelOptions["BoxRounded"]    = TRUE;
-           $LabelOptions["NoShadow"]      = TRUE;
+           $LabelOptions["BoxRounded"]    = true;
+           $LabelOptions["NoShadow"]      = true;
 
            $this->pChartObject->drawText($X,$Y+$Size+$TextPadding,$Name,$LabelOptions);
           }
@@ -831,7 +831,7 @@ namespace Webklex\pChart;
         }
       }
 
-     return(array("Pass"=>$Jobs,"Conflicts"=>$Conflicts));
+     return array("Pass"=>$Jobs,"Conflicts"=>$Conflicts);
     }
 
    /* Return the distance between two points */
@@ -850,20 +850,20 @@ namespace Webklex\pChart;
      $A = (($X3 * $Y4 - $X4 * $Y3) * ($X1 - $X2) - ($X1 * $Y2 - $X2 * $Y1) * ($X3 - $X4));
      $B = (($Y1 - $Y2) * ($X3 - $X4) - ($Y3 - $Y4) * ($X1 - $X2));
 
-     if ( $B == 0 ) { return(FALSE); }
+     if ( $B == 0 ) { return(false); }
      $Xi = $A / $B;
 
      $C = ($X1 - $X2);
-     if ( $C == 0 ) { return(FALSE); }
+     if ( $C == 0 ) { return(false); }
      $Yi = $Xi * (($Y1 - $Y2)/$C) + (($X1 * $Y2 - $X2 * $Y1)/$C);
 
      if ( $Xi >= min($X1,$X2) && $Xi >= min($X3,$X4) && $Xi <= max($X1,$X2) && $Xi <= max($X3,$X4))
       {
        if ( $Yi >= min($Y1,$Y2) && $Yi >= min($Y3,$Y4) && $Yi <= max($Y1,$Y2) && $Yi <= max($Y3,$Y4))
-        { return(TRUE); }
+        { return(true); }
       }
 
-      return(FALSE);   
+      return(false);
     }
   }
 ?>

@@ -38,21 +38,21 @@ namespace Webklex\pChart;
    function draw($X,$Y,$Width,$Height,$Format="")
     {
      $Values			= isset($Format["Values"]) ? $Format["Values"] : VOID;
-     $IndicatorSections		= isset($Format["IndicatorSections"]) ? $Format["IndicatorSections"] : NULL;
+     $IndicatorSections		= isset($Format["IndicatorSections"]) ? $Format["IndicatorSections"] : null;
      $ValueDisplay		= isset($Format["ValueDisplay"]) ? $Format["ValueDisplay"] : INDICATOR_VALUE_BUBBLE;
      $SectionsMargin		= isset($Format["SectionsMargin"]) ? $Format["SectionsMargin"] : 4;
-     $DrawLeftHead		= isset($Format["DrawLeftHead"]) ? $Format["DrawLeftHead"] : TRUE;
-     $DrawRightHead		= isset($Format["DrawRightHead"]) ? $Format["DrawRightHead"] : TRUE;
+     $DrawLeftHead		= isset($Format["DrawLeftHead"]) ? $Format["DrawLeftHead"] : true;
+     $DrawRightHead		= isset($Format["DrawRightHead"]) ? $Format["DrawRightHead"] : true;
      $HeadSize			= isset($Format["HeadSize"]) ? $Format["HeadSize"] : floor($Height/4);
      $TextPadding		= isset($Format["TextPadding"]) ? $Format["TextPadding"] : 4;
      $CaptionLayout		= isset($Format["CaptionLayout"]) ? $Format["CaptionLayout"] : INDICATOR_CAPTION_EXTENDED;
      $CaptionPosition		= isset($Format["CaptionPosition"]) ? $Format["CaptionPosition"] : INDICATOR_CAPTION_INSIDE;
-     $CaptionColorFactor	= isset($Format["CaptionColorFactor"]) ? $Format["CaptionColorFactor"] : NULL;
+     $CaptionColorFactor	= isset($Format["CaptionColorFactor"]) ? $Format["CaptionColorFactor"] : null;
      $CaptionR			= isset($Format["CaptionR"]) ? $Format["CaptionR"] : 255;
      $CaptionG			= isset($Format["CaptionG"]) ? $Format["CaptionG"] : 255;
      $CaptionB			= isset($Format["CaptionB"]) ? $Format["CaptionB"] : 255;
      $CaptionAlpha		= isset($Format["CaptionAlpha"]) ? $Format["CaptionAlpha"] : 100;
-     $SubCaptionColorFactor	= isset($Format["SubCaptionColorFactor"]) ? $Format["SubCaptionColorFactor"] : NULL;
+     $SubCaptionColorFactor	= isset($Format["SubCaptionColorFactor"]) ? $Format["SubCaptionColorFactor"] : null;
      $SubCaptionR		= isset($Format["SubCaptionR"]) ? $Format["SubCaptionR"] : 50;
      $SubCaptionG		= isset($Format["SubCaptionG"]) ? $Format["SubCaptionG"] : 50;
      $SubCaptionB		= isset($Format["SubCaptionB"]) ? $Format["SubCaptionB"] : 50;
@@ -67,7 +67,7 @@ namespace Webklex\pChart;
      if ( !is_array($Values) ) { $Value = $Values; $Values = ""; $Values[] = $Value; }
 
      /* No section, let's die */
-     if ( $IndicatorSections == NULL ) { return(0); }
+     if ( $IndicatorSections == null ) { return 0; }
 
      /* Determine indicator visual configuration */
      $OverallMin = $IndicatorSections[0]["End"]; $OverallMax = $IndicatorSections[0]["Start"];
@@ -115,7 +115,7 @@ namespace Webklex\pChart;
          else
           {
            sort($Break);
-           $Poly = ""; $Poly[] = $X1; $Poly[] = $Y; $LastPointWritten = FALSE;
+           $Poly = ""; $Poly[] = $X1; $Poly[] = $Y; $LastPointWritten = false;
            foreach($Break as $iKey => $Value)
             {
              if ( $Value-5 >= $X1 )
@@ -134,7 +134,7 @@ namespace Webklex\pChart;
               {
                $Offset = ($Value+5) - $X2;
                $Poly[] = $X2; $Poly[] = $Y + $Offset;
-               $LastPointWritten = TRUE;
+               $LastPointWritten = true;
               }
 
             }
@@ -172,18 +172,18 @@ namespace Webklex\pChart;
        else
         { $YOffset = 0; $XOffset = 0; }
 
-       if ( $CaptionColorFactor == NULL )
+       if ( $CaptionColorFactor == null )
         { $CaptionColor    = array("Align"=>TEXT_ALIGN_TOPLEFT,"FontName"=>$CaptionFontName,"FontSize"=>$CaptionFontSize,"R"=>$CaptionR,"G"=>$CaptionG,"B"=>$CaptionB,"Alpha"=>$CaptionAlpha); }
        else
         { $CaptionColor    = array("Align"=>TEXT_ALIGN_TOPLEFT,"FontName"=>$CaptionFontName,"FontSize"=>$CaptionFontSize,"R"=>$Settings["R"]+$CaptionColorFactor,"G"=>$Settings["G"]+$CaptionColorFactor,"B"=>$Settings["B"]+$CaptionColorFactor); }
 
-       if ( $SubCaptionColorFactor == NULL )
+       if ( $SubCaptionColorFactor == null )
         $SubCaptionColor = array("Align"=>TEXT_ALIGN_TOPLEFT,"FontName"=>$CaptionFontName,"FontSize"=>$CaptionFontSize,"R"=>$SubCaptionR,"G"=>$SubCaptionG,"B"=>$SubCaptionB,"Alpha"=>$SubCaptionAlpha);
        else
         $SubCaptionColor = array("Align"=>TEXT_ALIGN_TOPLEFT,"FontName"=>$CaptionFontName,"FontSize"=>$CaptionFontSize,"R"=>$Settings["R"]+$SubCaptionColorFactor,"G"=>$Settings["G"]+$SubCaptionColorFactor,"B"=>$Settings["B"]+$SubCaptionColorFactor);
 
        $RestoreShadow = $this->pChartObject->Shadow;
-       $this->pChartObject->Shadow = FALSE;
+       $this->pChartObject->Shadow = false;
 
        if ( $CaptionLayout == INDICATOR_CAPTION_DEFAULT )
         $this->pChartObject->drawText($X1,$Y+$Height+$TextPadding,$Caption,$CaptionColor);
@@ -202,7 +202,7 @@ namespace Webklex\pChart;
       }
 
      $RestoreShadow = $this->pChartObject->Shadow;
-     $this->pChartObject->Shadow = FALSE;
+     $this->pChartObject->Shadow = false;
 
      foreach($Values as $Key => $Value)
       {

@@ -43,7 +43,7 @@ namespace Webklex\pChart;
       {
        $SerieWeightName = $WeightSeries[$Key];
 
-       $this->pDataObject->setSerieDrawable($SerieWeightName,FALSE);
+       $this->pDataObject->setSerieDrawable($SerieWeightName,false);
 
        if ( count($this->pDataObject->Data["Series"][$SerieName]["Data"]) > $MaxValues ) { $MaxValues = count($this->pDataObject->Data["Series"][$SerieName]["Data"]); }
 
@@ -114,15 +114,15 @@ namespace Webklex\pChart;
    function drawBubbleChart($DataSeries,$WeightSeries,$Format="")
     {
      $ForceAlpha	= isset($Format["ForceAlpha"]) ? $Format["ForceAlpha"] : VOID;
-     $DrawBorder	= isset($Format["DrawBorder"]) ? $Format["DrawBorder"] : TRUE;
+     $DrawBorder	= isset($Format["DrawBorder"]) ? $Format["DrawBorder"] : true;
      $BorderWidth	= isset($Format["BorderWidth"]) ? $Format["BorderWidth"] : 1;
      $Shape		= isset($Format["Shape"]) ? $Format["Shape"] : BUBBLE_SHAPE_ROUND;
-     $Surrounding	= isset($Format["Surrounding"]) ? $Format["Surrounding"] : NULL;
+     $Surrounding	= isset($Format["Surrounding"]) ? $Format["Surrounding"] : null;
      $BorderR		= isset($Format["BorderR"]) ? $Format["BorderR"] : 0;
      $BorderG		= isset($Format["BorderG"]) ? $Format["BorderG"] : 0;
      $BorderB		= isset($Format["BorderB"]) ? $Format["BorderB"] : 0;
      $BorderAlpha	= isset($Format["BorderAlpha"]) ? $Format["BorderAlpha"] : 30;
-     $RecordImageMap	= isset($Format["RecordImageMap"]) ? $Format["RecordImageMap"] : FALSE;
+     $RecordImageMap	= isset($Format["RecordImageMap"]) ? $Format["RecordImageMap"] : false;
 
      if ( !is_array($DataSeries) )	{ $DataSeries = array($DataSeries); }
      if ( !is_array($WeightSeries) )	{ $WeightSeries = array($WeightSeries); }
@@ -130,8 +130,8 @@ namespace Webklex\pChart;
      $Data    = $this->pDataObject->getData();
      $Palette = $this->pDataObject->getPalette();
 
-     if ( isset($Data["Series"]["BubbleFakePositiveSerie"] ) ) { $this->pDataObject->setSerieDrawable("BubbleFakePositiveSerie",FALSE); }
-     if ( isset($Data["Series"]["BubbleFakeNegativeSerie"] ) ) { $this->pDataObject->setSerieDrawable("BubbleFakeNegativeSerie",FALSE); }
+     if ( isset($Data["Series"]["BubbleFakePositiveSerie"] ) ) { $this->pDataObject->setSerieDrawable("BubbleFakePositiveSerie",false); }
+     if ( isset($Data["Series"]["BubbleFakeNegativeSerie"] ) ) { $this->pDataObject->setSerieDrawable("BubbleFakeNegativeSerie",false); }
 
      $this->resetSeriesColors();
 
@@ -159,7 +159,7 @@ namespace Webklex\pChart;
         {
          if ( $BorderWidth != 1 )
           {
-           if ( $Surrounding != NULL )
+           if ( $Surrounding != null )
             { $BorderR = $Palette[$Key]["R"]+$Surrounding; $BorderG = $Palette[$Key]["G"]+$Surrounding; $BorderB = $Palette[$Key]["B"]+$Surrounding; }
            else
             { $BorderR = $BorderR; $BorderG = $BorderG; $BorderB = $BorderB; }
@@ -170,7 +170,7 @@ namespace Webklex\pChart;
           {
            $Color["BorderAlpha"] = $BorderAlpha;
 
-           if ( $Surrounding != NULL )
+           if ( $Surrounding != null )
             { $Color["BorderR"] = $Palette[$Key]["R"]+$Surrounding; $Color["BorderG"] = $Palette[$Key]["G"]+$Surrounding; $Color["BorderB"] = $Palette[$Key]["B"]+$Surrounding; }
            else
             { $Color["BorderR"] = $BorderR; $Color["BorderG"] = $BorderG; $Color["BorderB"] = $BorderB; }
@@ -255,7 +255,7 @@ namespace Webklex\pChart;
 
    function writeBubbleLabel($SerieName,$SerieWeightName,$Points,$Format="")
     {
-     $OverrideTitle	= isset($Format["OverrideTitle"]) ? $Format["OverrideTitle"] : NULL;
+     $OverrideTitle	= isset($Format["OverrideTitle"]) ? $Format["OverrideTitle"] : null;
      $DrawPoint		= isset($Format["DrawPoint"]) ? $Format["DrawPoint"] : LABEL_POINT_BOX;
 
      if ( !is_array($Points) ) { $Point = $Points; $Points = ""; $Points[] = $Point; }
@@ -264,7 +264,7 @@ namespace Webklex\pChart;
      $Palette = $this->pDataObject->getPalette();
 
      if ( !isset($Data["Series"][$SerieName]) || !isset($Data["Series"][$SerieWeightName]) )
-      return(0);
+      return 0;
 
      list($XMargin,$XDivs) = $this->pChartObject->scaleGetXSettings();
 

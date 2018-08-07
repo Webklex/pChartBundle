@@ -172,16 +172,16 @@ class ExamplesController extends Controller
     $myPicture->setFontProperties(array("FontName"=>__DIR__ . "/../Resources/fonts/Forgotte.ttf","FontSize"=>11));
     $myPicture->setGraphArea(50,60,670,190);
     $myPicture->drawFilledRectangle(50,60,670,190,array("R"=>255,"G"=>255,"B"=>255,"Surrounding"=>-200,"Alpha"=>10));
-    $myPicture->drawScale(array("CycleBackground"=>TRUE,"LabelSkip"=>4,"DrawSubTicks"=>TRUE));
+    $myPicture->drawScale(array("CycleBackground"=>true,"LabelSkip"=>4,"DrawSubTicks"=>true));
 
     /* Graph title */
-    $myPicture->setShadow(TRUE,array("X"=>1,"Y"=>1,"R"=>0,"G"=>0,"B"=>0,"Alpha"=>10));
+    $myPicture->setShadow(true,array("X"=>1,"Y"=>1,"R"=>0,"G"=>0,"B"=>0,"Alpha"=>10));
     $myPicture->drawText(50,52,"Magnetic noise",array("FontSize"=>20,"Align"=>TEXT_ALIGN_BOTTOMLEFT));
 
     /* Draw the data series */
     $myPicture->setFontProperties(array("FontName"=>__DIR__ . "/../Resources/fonts/pf_arma_five.ttf","FontSize"=>6));
     $myPicture->drawSplineChart();
-    $myPicture->setShadow(FALSE);
+    $myPicture->setShadow(false);
 
     /* Write the legend */
     $myPicture->drawLegend(475,50,array("Style"=>LEGEND_NOBORDER,"Mode"=>LEGEND_HORIZONTAL));
@@ -201,15 +201,15 @@ class ExamplesController extends Controller
   protected function test2()
   {
     /* Create the pChart object */
-    $myPicture = new pImage(600,310,NULL,TRUE);
+    $myPicture = new pImage(600,310,null,true);
 
     /* Draw the rounded box */
-    $myPicture->setShadow(TRUE,array("X"=>2,"Y"=>2,"R"=>0,"G"=>0,"B"=>0,"Alpha"=>30));  
+    $myPicture->setShadow(true,array("X"=>2,"Y"=>2,"R"=>0,"G"=>0,"B"=>0,"Alpha"=>30));
     $Settings = array("R"=>255,"G"=>255,"B"=>255,"BorderR"=>0,"BorderG"=>0,"BorderB"=>0);
     $myPicture->drawRoundedFilledRectangle(10,10,590,300,10,$Settings);
 
     /* Draw the cell divisions */
-    $myPicture->setShadow(FALSE);  
+    $myPicture->setShadow(false);
     $Settings = array("R"=>0,"G"=>0,"B"=>0);
     $myPicture->drawLine(10,110,590,110,$Settings);
     $myPicture->drawLine(200,10,200,110,$Settings);
@@ -253,16 +253,16 @@ class ExamplesController extends Controller
     /* Create the barcode 39 object */ 
     $Barcode39 = new pBarcode39(__DIR__ . "/../Resources/"); 
     $myPicture->setFontProperties(array("FontName"=>__DIR__ . "/../Resources/fonts/pf_arma_five.ttf","FontSize"=>6)); 
-    $Settings = array("ShowLegend"=>TRUE,"Height"=>55,"DrawArea"=>TRUE,"DrawArea"=>FALSE); 
+    $Settings = array("ShowLegend"=>true,"Height"=>55,"DrawArea"=>true,"DrawArea"=>false);
     $Barcode39->draw($myPicture,"12250000234502",30,220,$Settings); 
 
-    $Settings = array("ShowLegend"=>TRUE,"Height"=>14,"DrawArea"=>TRUE,"DrawArea"=>FALSE); 
+    $Settings = array("ShowLegend"=>true,"Height"=>14,"DrawArea"=>true,"DrawArea"=>false);
     $Barcode39->draw($myPicture,"75 cans",260,220,$Settings); 
     $Barcode39->draw($myPicture,"06062010",260,260,$Settings); 
 
     /* Create the barcode 128 object */ 
     $Barcode128 = new pBarcode128(__DIR__ . "/../Resources/"); 
-    $Settings = array("ShowLegend"=>TRUE,"Height"=>65,"DrawArea"=>TRUE,"DrawArea"=>FALSE); 
+    $Settings = array("ShowLegend"=>true,"Height"=>65,"DrawArea"=>true,"DrawArea"=>false);
     $Barcode128->draw($myPicture,"TLSE",450,25,$Settings); 
 
     return $myPicture;
@@ -303,17 +303,17 @@ class ExamplesController extends Controller
 
     /* Draw a simple barcode */
     $myPicture->setFontProperties(array("FontName"=>__DIR__ . "/../Resources/fonts/pf_arma_five.ttf","FontSize"=>6));
-    $Settings = array("ShowLegend"=>TRUE,"DrawArea"=>TRUE);
+    $Settings = array("ShowLegend"=>true,"DrawArea"=>true);
     $Barcode->draw($myPicture,"pChart Rocks!",50,50,$Settings);
 
     /* Draw a rotated barcode */
     $myPicture->setFontProperties(array("FontName"=>__DIR__ . "/../Resources/fonts/Forgotte.ttf","FontSize"=>12));
-    $Settings = array("ShowLegend"=>TRUE,"DrawArea"=>TRUE,"Angle"=>90);
+    $Settings = array("ShowLegend"=>true,"DrawArea"=>true,"Angle"=>90);
     $Barcode->draw($myPicture,"Turn me on",650,50,$Settings);
 
     /* Draw a rotated barcode */
     $myPicture->setFontProperties(array("FontName"=>__DIR__ . "/../Resources/fonts/Forgotte.ttf","FontSize"=>12));
-    $Settings = array("R"=>255,"G"=>255,"B"=>255,"AreaR"=>150,"AreaG"=>30,"AreaB"=>27,"ShowLegend"=>TRUE,"DrawArea"=>TRUE,"Angle"=>350,"AreaBorderR"=>70,"AreaBorderG"=>20,"AreaBorderB"=>20);
+    $Settings = array("R"=>255,"G"=>255,"B"=>255,"AreaR"=>150,"AreaG"=>30,"AreaB"=>27,"ShowLegend"=>true,"DrawArea"=>true,"Angle"=>350,"AreaBorderR"=>70,"AreaBorderG"=>20,"AreaBorderB"=>20);
     $Barcode->draw($myPicture,"Do what you want !",290,140,$Settings);
 
     return $myPicture;
@@ -354,17 +354,17 @@ class ExamplesController extends Controller
 
     /* Draw a simple barcode */
     $myPicture->setFontProperties(array("FontName"=>__DIR__ . "/../Resources/fonts/pf_arma_five.ttf","FontSize"=>6));
-    $Settings = array("ShowLegend"=>TRUE,"DrawArea"=>TRUE);
+    $Settings = array("ShowLegend"=>true,"DrawArea"=>true);
     $Barcode->draw($myPicture,"pChart Rocks!",50,50,$Settings);
 
     /* Draw a rotated barcode */
     $myPicture->setFontProperties(array("FontName"=>__DIR__ . "/../Resources/fonts/Forgotte.ttf","FontSize"=>12));
-    $Settings = array("ShowLegend"=>TRUE,"DrawArea"=>TRUE,"Angle"=>90);
+    $Settings = array("ShowLegend"=>true,"DrawArea"=>true,"Angle"=>90);
     $Barcode->draw($myPicture,"Turn me on",650,50,$Settings);
 
     /* Draw a rotated barcode */
     $myPicture->setFontProperties(array("FontName"=>__DIR__ . "/../Resources/fonts/Forgotte.ttf","FontSize"=>12));
-    $Settings = array("R"=>255,"G"=>255,"B"=>255,"AreaR"=>150,"AreaG"=>30,"AreaB"=>27,"ShowLegend"=>TRUE,"DrawArea"=>TRUE,"Angle"=>350,"AreaBorderR"=>70,"AreaBorderG"=>20,"AreaBorderB"=>20);
+    $Settings = array("R"=>255,"G"=>255,"B"=>255,"AreaR"=>150,"AreaG"=>30,"AreaB"=>27,"ShowLegend"=>true,"DrawArea"=>true,"Angle"=>350,"AreaBorderR"=>70,"AreaBorderG"=>20,"AreaBorderB"=>20);
     $Barcode->draw($myPicture,"Do what you want !",290,140,$Settings);
 
     return $myPicture;
@@ -430,7 +430,7 @@ class ExamplesController extends Controller
     $myPicture = new pImage(700,230,$MyData);
 
     /* Turn of Antialiasing */
-    $myPicture->Antialias = FALSE;
+    $myPicture->Antialias = false;
 
     /* Draw the background */ 
     $Settings = array("R"=>170, "G"=>183, "B"=>87, "Dash"=>1, "DashR"=>190, "DashG"=>203, "DashB"=>107);
@@ -454,25 +454,25 @@ class ExamplesController extends Controller
     $myPicture->setGraphArea(60,40,650,200);
 
     /* Draw the scale */
-    $scaleSettings = array("XMargin"=>10,"YMargin"=>10,"Floating"=>TRUE,"GridR"=>255,"GridG"=>255,"GridB"=>255,"DrawSubTicks"=>TRUE,"CycleBackground"=>TRUE);
+    $scaleSettings = array("XMargin"=>10,"YMargin"=>10,"Floating"=>true,"GridR"=>255,"GridG"=>255,"GridB"=>255,"DrawSubTicks"=>true,"CycleBackground"=>true);
     $myPicture->drawScale($scaleSettings);
 
     /* Write the chart legend */
     $myPicture->drawLegend(540,20,array("Style"=>LEGEND_NOBORDER,"Mode"=>LEGEND_HORIZONTAL));
 
     /* Turn on Antialiasing */
-    $myPicture->Antialias = TRUE;
+    $myPicture->Antialias = true;
 
     /* Draw the area chart */
-    $MyData->setSerieDrawable("Probe 1",TRUE);
-    $MyData->setSerieDrawable("Probe 2",FALSE);
+    $MyData->setSerieDrawable("Probe 1",true);
+    $MyData->setSerieDrawable("Probe 2",false);
     $myPicture->drawAreaChart();
 
     /* Draw a line and a plot chart on top */
-    $MyData->setSerieDrawable("Probe 2",TRUE);
-    $myPicture->setShadow(TRUE,array("X"=>1,"Y"=>1,"R"=>0,"G"=>0,"B"=>0,"Alpha"=>10));
+    $MyData->setSerieDrawable("Probe 2",true);
+    $myPicture->setShadow(true,array("X"=>1,"Y"=>1,"R"=>0,"G"=>0,"B"=>0,"Alpha"=>10));
     $myPicture->drawLineChart();
-    $myPicture->drawPlotChart(array("PlotBorder"=>TRUE,"PlotSize"=>3,"BorderSize"=>1,"Surrounding"=>-60,"BorderAlpha"=>80));
+    $myPicture->drawPlotChart(array("PlotBorder"=>true,"PlotSize"=>3,"BorderSize"=>1,"Surrounding"=>-60,"BorderAlpha"=>80));
 
     return $myPicture;
   }
@@ -500,7 +500,7 @@ class ExamplesController extends Controller
     $myPicture = new pImage(700,230,$MyData);
 
     /* Turn on antialiasing */
-    $myPicture->Antialias = FALSE;
+    $myPicture->Antialias = false;
 
     /* Create a solid background */
     $Settings = array("R"=>179, "G"=>217, "B"=>91, "Dash"=>1, "DashR"=>199, "DashG"=>237, "DashB"=>111);
@@ -522,35 +522,35 @@ class ExamplesController extends Controller
     $myPicture->setFontProperties(array("FontName"=>__DIR__ . "/../Resources/fonts/pf_arma_five.ttf","FontSize"=>6));
     $myPicture->setGraphArea(50,60,670,190);
     $myPicture->drawFilledRectangle(50,60,670,190,array("R"=>255,"G"=>255,"B"=>255,"Surrounding"=>-200,"Alpha"=>10));
-    $myPicture->drawScale(array("CycleBackground"=>TRUE));
+    $myPicture->drawScale(array("CycleBackground"=>true));
 
     /* Graph title */
     $myPicture->setFontProperties(array("FontName"=>__DIR__ . "/../Resources/fonts/Forgotte.ttf","FontSize"=>11));
-    $myPicture->setShadow(TRUE,array("X"=>1,"Y"=>1,"R"=>0,"G"=>0,"B"=>0,"Alpha"=>10));
+    $myPicture->setShadow(true,array("X"=>1,"Y"=>1,"R"=>0,"G"=>0,"B"=>0,"Alpha"=>10));
     $myPicture->drawText(50,52,"Chart subtitle",array("FontSize"=>20,"Align"=>TEXT_ALIGN_BOTTOMLEFT));
 
     /* Draw the bar chart chart */
     $myPicture->setFontProperties(array("FontName"=>__DIR__ . "/../Resources/fonts/pf_arma_five.ttf","FontSize"=>6));
-    $MyData->setSerieDrawable("Last year",FALSE);
+    $MyData->setSerieDrawable("Last year",false);
     $myPicture->drawBarChart();
 
     /* Turn on antialiasing */
-    $myPicture->Antialias = TRUE;
+    $myPicture->Antialias = true;
 
     /* Draw the line and plot chart */
-    $MyData->setSerieDrawable("Last year",TRUE);
-    $MyData->setSerieDrawable("This year",FALSE);
-    $myPicture->setShadow(TRUE,array("X"=>2,"Y"=>2,"R"=>0,"G"=>0,"B"=>0,"Alpha"=>10));
+    $MyData->setSerieDrawable("Last year",true);
+    $MyData->setSerieDrawable("This year",false);
+    $myPicture->setShadow(true,array("X"=>2,"Y"=>2,"R"=>0,"G"=>0,"B"=>0,"Alpha"=>10));
     $myPicture->drawSplineChart();
 
-    $myPicture->setShadow(FALSE);
-    $myPicture->drawPlotChart(array("PlotSize"=>3,"PlotBorder"=>TRUE,"BorderSize"=>3,"BorderAlpha"=>20));
+    $myPicture->setShadow(false);
+    $myPicture->drawPlotChart(array("PlotSize"=>3,"PlotBorder"=>true,"BorderSize"=>3,"BorderAlpha"=>20));
 
     /* Make sure all series are drawable before writing the scale */
     $MyData->drawAll();
 
     /* Write the legend */
-    $myPicture->setShadow(TRUE,array("X"=>1,"Y"=>1,"R"=>0,"G"=>0,"B"=>0,"Alpha"=>10));
+    $myPicture->setShadow(true,array("X"=>1,"Y"=>1,"R"=>0,"G"=>0,"B"=>0,"Alpha"=>10));
     $myPicture->drawLegend(580,35,array("Style"=>LEGEND_ROUND,"Alpha"=>20,"Mode"=>LEGEND_HORIZONTAL));
 
     return $myPicture;
@@ -599,25 +599,25 @@ class ExamplesController extends Controller
     $myPicture->setFontProperties(array("FontName"=>__DIR__ . "/../Resources/fonts/Forgotte.ttf","FontSize"=>10,"R"=>80,"G"=>80,"B"=>80));
 
     /* Enable shadow computing */ 
-    $myPicture->setShadow(TRUE,array("X"=>2,"Y"=>2,"R"=>0,"G"=>0,"B"=>0,"Alpha"=>50));
+    $myPicture->setShadow(true,array("X"=>2,"Y"=>2,"R"=>0,"G"=>0,"B"=>0,"Alpha"=>50));
 
     /* Create the pPie object */ 
     $PieChart = new pPie($myPicture,$MyData);
 
     /* Draw a simple pie chart */ 
-    $PieChart->draw2DPie(120,125,array("SecondPass"=>FALSE));
+    $PieChart->draw2DPie(120,125,array("SecondPass"=>false));
 
     /* Draw an AA pie chart */ 
-    $PieChart->draw2DPie(340,125,array("DrawLabels"=>TRUE,"LabelStacked"=>TRUE,"Border"=>TRUE));
+    $PieChart->draw2DPie(340,125,array("DrawLabels"=>true,"LabelStacked"=>true,"Border"=>true));
 
     /* Draw a splitted pie chart */ 
-    $PieChart->draw2DPie(560,125,array("WriteValues"=>PIE_VALUE_PERCENTAGE,"DataGapAngle"=>10,"DataGapRadius"=>6,"Border"=>TRUE,"BorderR"=>255,"BorderG"=>255,"BorderB"=>255));
+    $PieChart->draw2DPie(560,125,array("WriteValues"=>PIE_VALUE_PERCENTAGE,"DataGapAngle"=>10,"DataGapRadius"=>6,"Border"=>true,"BorderR"=>255,"BorderG"=>255,"BorderB"=>255));
 
     /* Write the legend */
     $myPicture->setFontProperties(array("FontName"=>__DIR__ . "/../Resources/fonts/pf_arma_five.ttf","FontSize"=>6));
-    $myPicture->setShadow(TRUE,array("X"=>1,"Y"=>1,"R"=>0,"G"=>0,"B"=>0,"Alpha"=>20));
-    $myPicture->drawText(120,200,"Single AA pass",array("DrawBox"=>TRUE,"BoxRounded"=>TRUE,"R"=>0,"G"=>0,"B"=>0,"Align"=>TEXT_ALIGN_TOPMIDDLE));
-    $myPicture->drawText(440,200,"Extended AA pass / Splitted",array("DrawBox"=>TRUE,"BoxRounded"=>TRUE,"R"=>0,"G"=>0,"B"=>0,"Align"=>TEXT_ALIGN_TOPMIDDLE));
+    $myPicture->setShadow(true,array("X"=>1,"Y"=>1,"R"=>0,"G"=>0,"B"=>0,"Alpha"=>20));
+    $myPicture->drawText(120,200,"Single AA pass",array("DrawBox"=>true,"BoxRounded"=>true,"R"=>0,"G"=>0,"B"=>0,"Align"=>TEXT_ALIGN_TOPMIDDLE));
+    $myPicture->drawText(440,200,"Extended AA pass / Splitted",array("DrawBox"=>true,"BoxRounded"=>true,"R"=>0,"G"=>0,"B"=>0,"Align"=>TEXT_ALIGN_TOPMIDDLE));
 
     /* Write the legend box */ 
     $myPicture->setFontProperties(array("FontName"=>__DIR__ . "/../Resources/fonts/Silkscreen.ttf","FontSize"=>6,"R"=>255,"G"=>255,"B"=>255));

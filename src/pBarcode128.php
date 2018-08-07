@@ -53,9 +53,9 @@ namespace Webklex\pChart;
    function getSize($TextString,$Format="")
     {
      $Angle		= isset($Format["Angle"]) ? $Format["Angle"] : 0;
-     $ShowLegend	= isset($Format["ShowLegend"]) ? $Format["ShowLegend"] : FALSE;
+     $ShowLegend	= isset($Format["ShowLegend"]) ? $Format["ShowLegend"] : false;
      $LegendOffset	= isset($Format["LegendOffset"]) ? $Format["LegendOffset"] : 5;
-     $DrawArea		= isset($Format["DrawArea"]) ? $Format["DrawArea"] : FALSE;
+     $DrawArea		= isset($Format["DrawArea"]) ? $Format["DrawArea"] : false;
      $FontSize		= isset($Format["FontSize"]) ? $Format["FontSize"] : 12;
      $Height		= isset($Format["Height"]) ? $Format["Height"] : 30;
 
@@ -75,7 +75,7 @@ namespace Webklex\pChart;
      $AreaWidth  = max(abs($X1),abs($X2));
      $AreaHeight = max(abs($Y1),abs($Y2));
 
-     return(array("Width"=>$AreaWidth,"Height"=>$AreaHeight));
+     return array("Width"=>$AreaWidth,"Height"=>$AreaHeight);
     }
 
    function encode128($Value,$Format="")
@@ -99,7 +99,7 @@ namespace Webklex\pChart;
      $this->Result = $this->Result.$this->Reverse[$this->CRC]["Code"];
      $this->Result = $this->Result."1100011101011";
 
-     return($TextString);
+     return $TextString;
     }
 
    /* Create the encoded string */
@@ -113,9 +113,9 @@ namespace Webklex\pChart;
      $Alpha		= isset($Format["Alpha"]) ? $Format["Alpha"] : 100;
      $Height		= isset($Format["Height"]) ? $Format["Height"] : 30;
      $Angle		= isset($Format["Angle"]) ? $Format["Angle"] : 0;
-     $ShowLegend	= isset($Format["ShowLegend"]) ? $Format["ShowLegend"] : FALSE;
+     $ShowLegend	= isset($Format["ShowLegend"]) ? $Format["ShowLegend"] : false;
      $LegendOffset	= isset($Format["LegendOffset"]) ? $Format["LegendOffset"] : 5;
-     $DrawArea		= isset($Format["DrawArea"]) ? $Format["DrawArea"] : FALSE;
+     $DrawArea		= isset($Format["DrawArea"]) ? $Format["DrawArea"] : false;
      $AreaR		= isset($Format["AreaR"]) ? $Format["AreaR"] : 255;
      $AreaG		= isset($Format["AreaG"]) ? $Format["AreaG"] : 255;
      $AreaB		= isset($Format["AreaB"]) ? $Format["AreaB"] : 255;

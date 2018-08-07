@@ -35,19 +35,19 @@ namespace Webklex\pChart;
  class pImage extends pDraw
   {
    /* Image settings, size, quality, .. */
-   var $XSize		= NULL;				// Width of the picture
-   var $YSize		= NULL;				// Height of the picture
-   var $Picture		= NULL;				// GD picture object
-   var $Antialias	= TRUE;				// Turn antialias on or off
+   var $XSize		= null;				// Width of the picture
+   var $YSize		= null;				// Height of the picture
+   var $Picture		= null;				// GD picture object
+   var $Antialias	= true;				// Turn antialias on or off
    var $AntialiasQuality  = 0;				// Quality of the antialiasing implementation (0-1)
    var $Mask		= "";				// Already drawn pixels mask (Filled circle implementation)
-   var $TransparentBackground = FALSE;			// Just to know if we need to flush the alpha channels when rendering
+   var $TransparentBackground = false;			// Just to know if we need to flush the alpha channels when rendering
 
    /* Graph area settings */
-   var $GraphAreaX1	= NULL;				// Graph area X origin
-   var $GraphAreaY1	= NULL;				// Graph area Y origin
-   var $GraphAreaX2	= NULL;				// Graph area bottom right X position
-   var $GraphAreaY2	= NULL;				// Graph area bottom right Y position
+   var $GraphAreaX1	= null;				// Graph area X origin
+   var $GraphAreaY1	= null;				// Graph area Y origin
+   var $GraphAreaX2	= null;				// Graph area bottom right X position
+   var $GraphAreaY2	= null;				// Graph area bottom right Y position
 
    /* Scale settings */
    var $ScaleMinDivHeight = 20;				// Minimum height for scame divs
@@ -55,39 +55,39 @@ namespace Webklex\pChart;
    /* Font properties */
    var $FontName	= "fonts/GeosansLight.ttf";	// Default font file
    var $FontSize	= 12;				// Default font size
-   var $FontBox		= NULL;				// Return the bounding box of the last written string
+   var $FontBox		= null;				// Return the bounding box of the last written string
    var $FontColorR	= 0;				// Default color settings
    var $FontColorG	= 0;				// Default color settings
    var $FontColorB	= 0;				// Default color settings
    var $FontColorA	= 100;				// Default transparency
 
    /* Shadow properties */
-   var $Shadow		= FALSE;			// Turn shadows on or off
-   var $ShadowX		= NULL;				// X Offset of the shadow
-   var $ShadowY		= NULL;				// Y Offset of the shadow
-   var $ShadowR		= NULL;				// R component of the shadow
-   var $ShadowG		= NULL;				// G component of the shadow
-   var $ShadowB		= NULL;				// B component of the shadow
-   var $Shadowa		= NULL;				// Alpha level of the shadow
+   var $Shadow		= false;			// Turn shadows on or off
+   var $ShadowX		= null;				// X Offset of the shadow
+   var $ShadowY		= null;				// Y Offset of the shadow
+   var $ShadowR		= null;				// R component of the shadow
+   var $ShadowG		= null;				// G component of the shadow
+   var $ShadowB		= null;				// B component of the shadow
+   var $Shadowa		= null;				// Alpha level of the shadow
 
    /* Image map */
-   var $ImageMap	= NULL;				// Aray containing the image map
+   var $ImageMap	= null;				// Aray containing the image map
    var $ImageMapIndex	= "pChart";			// Name of the session array
-   var $ImageMapStorageMode = NULL;			// Save the current imagemap storage mode
-   var $ImageMapAutoDelete  = TRUE;			// Automatic deletion of the image map temp files
+   var $ImageMapStorageMode = null;			// Save the current imagemap storage mode
+   var $ImageMapAutoDelete  = true;			// Automatic deletion of the image map temp files
 
    /* Data Set */
-   var $DataSet		= NULL;				// Attached dataset
+   var $DataSet		= null;				// Attached dataset
 
    /* Last generated chart info */
    var $LastChartLayout	= CHART_LAST_LAYOUT_REGULAR;	// Last layout : regular or stacked
 
    /* Class constructor */
-   function __construct($XSize,$YSize,$DataSet=NULL,$TransparentBackground=FALSE)
+   function __construct($XSize,$YSize,$DataSet=null,$TransparentBackground=false)
     {
      $this->TransparentBackground = $TransparentBackground;
 
-     if ( $DataSet != NULL ) { $this->DataSet = $DataSet; }
+     if ( $DataSet != null ) { $this->DataSet = $DataSet; }
 
      $this->XSize   = $XSize;
      $this->YSize   = $YSize;
@@ -95,9 +95,9 @@ namespace Webklex\pChart;
 
      if ( $this->TransparentBackground )
       {
-       imagealphablending($this->Picture,FALSE);
+       imagealphablending($this->Picture,false);
        imagefilledrectangle($this->Picture, 0,0,$XSize, $YSize, imagecolorallocatealpha($this->Picture, 255, 255, 255, 127));
-       imagealphablending($this->Picture,TRUE);
+       imagealphablending($this->Picture,true);
        imagesavealpha($this->Picture,true); 
       }
      else
@@ -108,7 +108,7 @@ namespace Webklex\pChart;
     }
 
    /* Enable / Disable and set shadow properties */
-   function setShadow($Enabled=TRUE,$Format="")
+   function setShadow($Enabled=true,$Format="")
     {
      $X	    = isset($Format["X"]) ? $Format["X"] : 2;
      $Y	    = isset($Format["Y"]) ? $Format["Y"] : 2;
@@ -153,7 +153,7 @@ namespace Webklex\pChart;
     }
 
    /* Render the picture to a web browser stream */
-   function stroke($BrowserExpire=FALSE)
+   function stroke($BrowserExpire=false)
     {
      if ( $this->TransparentBackground ) { imagealphablending($this->Picture,false); imagesavealpha($this->Picture,true); }
 
@@ -203,7 +203,7 @@ namespace Webklex\pChart;
      $RealPos[TEXT_ALIGN_BOTTOMLEFT]["X"] = $RealPos[0]["X"];	$RealPos[TEXT_ALIGN_BOTTOMLEFT]["Y"] = $RealPos[0]["Y"];
      $RealPos[TEXT_ALIGN_BOTTOMRIGHT]["X"] = $RealPos[1]["X"];	$RealPos[TEXT_ALIGN_BOTTOMRIGHT]["Y"] = $RealPos[1]["Y"];
 
-     return($RealPos);
+     return $RealPos;
     }
 
    /* Return the surrounding box of text area */
@@ -228,7 +228,7 @@ namespace Webklex\pChart;
      $RealPos[TEXT_ALIGN_MIDDLERIGHT]["X"]	= ($RealPos[1]["X"]-$RealPos[2]["X"])/2+$RealPos[2]["X"];	$RealPos[TEXT_ALIGN_MIDDLERIGHT]["Y"]	= ($RealPos[1]["Y"]-$RealPos[2]["Y"])/2+$RealPos[2]["Y"];
      $RealPos[TEXT_ALIGN_MIDDLEMIDDLE]["X"]	= ($RealPos[1]["X"]-$RealPos[3]["X"])/2+$RealPos[3]["X"];	$RealPos[TEXT_ALIGN_MIDDLEMIDDLE]["Y"]	= ($RealPos[0]["Y"]-$RealPos[2]["Y"])/2+$RealPos[2]["Y"];
 
-     return($RealPos);
+     return $RealPos;
     }
 
    /* Set current font properties */
@@ -238,18 +238,18 @@ namespace Webklex\pChart;
      $G		= isset($Format["G"]) ? $Format["G"] : -1;
      $B		= isset($Format["B"]) ? $Format["B"] : -1;
      $Alpha	= isset($Format["Alpha"]) ? $Format["Alpha"] : 100;
-     $FontName	= isset($Format["FontName"]) ? $Format["FontName"] : NULL;
-     $FontSize	= isset($Format["FontSize"]) ? $Format["FontSize"] : NULL;
+     $FontName	= isset($Format["FontName"]) ? $Format["FontName"] : null;
+     $FontSize	= isset($Format["FontSize"]) ? $Format["FontSize"] : null;
 
      if ( $R != -1)       {  $this->FontColorR = $R; }
      if ( $G != -1)       {  $this->FontColorG = $G; }
      if ( $B != -1)       {  $this->FontColorB = $B; }
-     if ( $Alpha != NULL) {  $this->FontColorA = $Alpha; }
+     if ( $Alpha != null) {  $this->FontColorA = $Alpha; }
 
-     if ( $FontName != NULL  )
+     if ( $FontName != null  )
       $this->FontName = $FontName;
  
-     if ( $FontSize != NULL  )
+     if ( $FontSize != null  )
       $this->FontSize = $FontSize;
     }
 
@@ -257,7 +257,7 @@ namespace Webklex\pChart;
    function getFirstDecimal($Value)
     {
      $Values = preg_split("/\./",$Value);
-     if ( isset($Values[1]) ) { return(substr($Values[1],0,1)); } else { return(0); }
+     if ( isset($Values[1]) ) { return(substr($Values[1],0,1)); } else { return 0; }
     }
 
    /* Attach a dataset to your pChart Object */
@@ -277,7 +277,7 @@ namespace Webklex\pChart;
      if ($StorageMode == IMAGE_MAP_STORAGE_SESSION)
       {
        if(!isset($_SESSION)) { session_start(); }
-       $_SESSION[$this->ImageMapIndex]    = NULL;
+       $_SESSION[$this->ImageMapIndex]    = null;
       }
      elseif($StorageMode == IMAGE_MAP_STORAGE_FILE)
       {
@@ -289,9 +289,9 @@ namespace Webklex\pChart;
     }
 
    /* Add a zone to the image map */
-   function addToImageMap($Type,$Plots,$Color=NULL,$Title=NULL,$Message=NULL,$HTMLEncode=FALSE)
+   function addToImageMap($Type,$Plots,$Color=null,$Title=null,$Message=null,$HTMLEncode=false)
     {
-     if ( $this->ImageMapStorageMode == NULL ) { $this->initialiseImageMap(); }
+     if ( $this->ImageMapStorageMode == null ) { $this->initialiseImageMap(); }
 
      /* Encode the characters in the imagemap in HTML standards */
      $Title   = str_replace("&#8364;","\u20AC",$Title);
@@ -324,13 +324,13 @@ namespace Webklex\pChart;
      $Result = "";
      foreach($this->DataSet->Data["Series"][$SerieName]["Data"] as $Key => $Value)
       { if ( $Value != VOID && isset($Values[$Key]) ) { $Result[] = $Values[$Key]; } }
-     return($Result);
+     return $Result;
     }
 
    /* Replace the title of one image map serie */
    function replaceImageMapTitle($OldTitle, $NewTitle)
     {
-     if ( $this->ImageMapStorageMode == NULL ) { return(-1); }
+     if ( $this->ImageMapStorageMode == null ) { return(-1); }
 
      if ( is_array($NewTitle) ) { $NewTitle = $this->removeVOIDFromArray($OldTitle, $NewTitle); }
  
@@ -371,7 +371,7 @@ namespace Webklex\pChart;
    /* Replace the values of the image map contents */
    function replaceImageMapValues($Title, $Values)
     {
-     if ( $this->ImageMapStorageMode == NULL ) { return(-1); }
+     if ( $this->ImageMapStorageMode == null ) { return(-1); }
 
      $Values = $this->removeVOIDFromArray($Title, $Values);
      $ID = 0; 
@@ -412,7 +412,7 @@ namespace Webklex\pChart;
      if ( $this->ImageMapStorageMode == IMAGE_MAP_STORAGE_SESSION )
       {
        if(!isset($_SESSION)) { session_start(); }
-       if ( $_SESSION[$Name] != NULL )
+       if ( $_SESSION[$Name] != null )
         {
          foreach($_SESSION[$Name] as $Key => $Params)
           { echo $Params[0].IMAGE_MAP_DELIMITER.$Params[1].IMAGE_MAP_DELIMITER.$Params[2].IMAGE_MAP_DELIMITER.$Params[3].IMAGE_MAP_DELIMITER.$Params[4]."\r\n"; }
@@ -440,7 +440,7 @@ namespace Webklex\pChart;
      $R=intval($R); $G=intval($G); $B=intval($B);
      $R=dechex($R<0?0:($R>255?255:$R)); $G=dechex($G<0?0:($G>255?255:$G));$B=dechex($B<0?0:($B>255?255:$B));
      $Color="#".(strlen($R) < 2?'0':'').$R; $Color.=(strlen($G) < 2?'0':'').$G; $Color.= (strlen($B) < 2?'0':'').$B;
-     return($Color);
+     return $Color;
     }
 
    /* Reverse an array of points */
@@ -448,7 +448,7 @@ namespace Webklex\pChart;
     {
      $Result = "";
      for($i=count($Plots)-2;$i>=0;$i=$i-2) { $Result[] = $Plots[$i]; $Result[] = $Plots[$i+1]; }
-     return($Result);
+     return $Result;
     }
 
    /* Mirror Effect */

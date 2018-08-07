@@ -26,7 +26,7 @@ namespace Webklex\pChart;
    var $MOD43;
 
    /* Class creator */
-   function __construct($BasePath="",$EnableMOD43=FALSE)
+   function __construct($BasePath="",$EnableMOD43=false)
     {
      $this->MOD43  = $EnableMOD43;
      $this->Codes   = "";
@@ -52,9 +52,9 @@ namespace Webklex\pChart;
    function getSize($TextString,$Format="")
     {
      $Angle		= isset($Format["Angle"]) ? $Format["Angle"] : 0;
-     $ShowLegend	= isset($Format["ShowLegend"]) ? $Format["ShowLegend"] : FALSE;
+     $ShowLegend	= isset($Format["ShowLegend"]) ? $Format["ShowLegend"] : false;
      $LegendOffset	= isset($Format["LegendOffset"]) ? $Format["LegendOffset"] : 5;
-     $DrawArea		= isset($Format["DrawArea"]) ? $Format["DrawArea"] : FALSE;
+     $DrawArea		= isset($Format["DrawArea"]) ? $Format["DrawArea"] : false;
      $FontSize		= isset($Format["FontSize"]) ? $Format["FontSize"] : 12;
      $Height		= isset($Format["Height"]) ? $Format["Height"] : 30;
 
@@ -74,7 +74,7 @@ namespace Webklex\pChart;
      $AreaWidth  = max(abs($X1),abs($X2));
      $AreaHeight = max(abs($Y1),abs($Y2));
 
-     return(array("Width"=>$AreaWidth,"Height"=>$AreaHeight));
+     return array("Width"=>$AreaWidth,"Height"=>$AreaHeight);
     }
 
    /* Create the encoded string */
@@ -103,7 +103,7 @@ namespace Webklex\pChart;
      $this->Result = $this->Result."100101101101";
      $TextString   = "*".$TextString."*";
 
-     return($TextString);
+     return $TextString;
     }
 
    /* Create the encoded string */
@@ -117,9 +117,9 @@ namespace Webklex\pChart;
      $Alpha		= isset($Format["Alpha"]) ? $Format["Alpha"] : 100;
      $Height		= isset($Format["Height"]) ? $Format["Height"] : 30;
      $Angle		= isset($Format["Angle"]) ? $Format["Angle"] : 0;
-     $ShowLegend	= isset($Format["ShowLegend"]) ? $Format["ShowLegend"] : FALSE;
+     $ShowLegend	= isset($Format["ShowLegend"]) ? $Format["ShowLegend"] : false;
      $LegendOffset	= isset($Format["LegendOffset"]) ? $Format["LegendOffset"] : 5;
-     $DrawArea		= isset($Format["DrawArea"]) ? $Format["DrawArea"] : FALSE;
+     $DrawArea		= isset($Format["DrawArea"]) ? $Format["DrawArea"] : false;
      $AreaR		= isset($Format["AreaR"]) ? $Format["AreaR"] : 255;
      $AreaG		= isset($Format["AreaG"]) ? $Format["AreaG"] : 255;
      $AreaB		= isset($Format["AreaB"]) ? $Format["AreaB"] : 255;

@@ -35,7 +35,7 @@ namespace Webklex\pChart;
    function drawScatterScale($Format="")
     {
      $Mode		= isset($Format["Mode"]) ? $Format["Mode"] : SCALE_MODE_FLOATING;
-     $Floating		= isset($Format["Floating"]) ? $Format["Floating"] : FALSE;
+     $Floating		= isset($Format["Floating"]) ? $Format["Floating"] : false;
      $XLabelsRotation	= isset($Format["XLabelsRotation"]) ? $Format["XLabelsRotation"] : 90;
      $MinDivHeight	= isset($Format["MinDivHeight"]) ? $Format["MinDivHeight"] : 20;
      $Factors		= isset($Format["Factors"]) ? $Format["Factors"] : array(1,2,5);
@@ -60,7 +60,7 @@ namespace Webklex\pChart;
      $TickGo		= isset($Format["TickG"]) ? $Format["TickG"] : 0;
      $TickBo		= isset($Format["TickB"]) ? $Format["TickB"] : 0;
      $TickAlpha		= isset($Format["TickAlpha"]) ? $Format["TickAlpha"] : 100;
-     $DrawSubTicks	= isset($Format["DrawSubTicks"]) ? $Format["DrawSubTicks"] : FALSE;
+     $DrawSubTicks	= isset($Format["DrawSubTicks"]) ? $Format["DrawSubTicks"] : false;
      $InnerSubTickWidth	= isset($Format["InnerSubTickWidth"]) ? $Format["InnerSubTickWidth"] : 0;
      $OuterSubTickWidth	= isset($Format["OuterSubTickWidth"]) ? $Format["OuterSubTickWidth"] : 2;
      $SubTickR		= isset($Format["SubTickR"]) ? $Format["SubTickR"] : 255;
@@ -68,9 +68,9 @@ namespace Webklex\pChart;
      $SubTickB		= isset($Format["SubTickB"]) ? $Format["SubTickB"] : 0;
      $SubTickAlpha	= isset($Format["SubTickAlpha"]) ? $Format["SubTickAlpha"] : 100;
      $XReleasePercent	= isset($Format["XReleasePercent"]) ? $Format["XReleasePercent"] : 1;
-     $DrawArrows	= isset($Format["DrawArrows"]) ? $Format["DrawArrows"] : FALSE;
+     $DrawArrows	= isset($Format["DrawArrows"]) ? $Format["DrawArrows"] : false;
      $ArrowSize         = isset($Format["ArrowSize"]) ? $Format["ArrowSize"] : 8;
-     $CycleBackground	= isset($Format["CycleBackground"]) ? $Format["CycleBackground"] : FALSE;
+     $CycleBackground	= isset($Format["CycleBackground"]) ? $Format["CycleBackground"] : false;
      $BackgroundR1	= isset($Format["BackgroundR1"]) ? $Format["BackgroundR1"] : 255;
      $BackgroundG1	= isset($Format["BackgroundG1"]) ? $Format["BackgroundG1"] : 255;
      $BackgroundB1	= isset($Format["BackgroundB1"]) ? $Format["BackgroundB1"] : 255;
@@ -81,11 +81,11 @@ namespace Webklex\pChart;
      $BackgroundAlpha2	= isset($Format["BackgroundAlpha2"]) ? $Format["BackgroundAlpha2"] : 10;
 
      /* Check if we have at least both one X and Y axis */
-     $GotXAxis = FALSE; $GotYAxis = FALSE;
+     $GotXAxis = false; $GotYAxis = false;
      foreach($this->pDataObject->data["Axis"] as $AxisID => $AxisSettings)
       {
-       if ( $AxisSettings["Identity"] == AXIS_X ) { $GotXAxis = TRUE; }
-       if ( $AxisSettings["Identity"] == AXIS_Y ) { $GotYAxis = TRUE; }
+       if ( $AxisSettings["Identity"] == AXIS_X ) { $GotXAxis = true; }
+       if ( $AxisSettings["Identity"] == AXIS_Y ) { $GotYAxis = true; }
       }
      if ( !$GotXAxis ) { return(SCATTER_MISSING_X_SERIE); }
      if ( !$GotYAxis ) { return(SCATTER_MISSING_Y_SERIE); }
@@ -145,9 +145,9 @@ namespace Webklex\pChart;
 
        if ( isset($Scale["Format"]) ) { $Data["Axis"][$AxisID]["Format"] = $Scale["Format"]; }
 
-       if ( !isset($Data["Axis"][$AxisID]["Display"]) ) { $Data["Axis"][$AxisID]["Display"] = NULL; }
-       if ( !isset($Data["Axis"][$AxisID]["Format"]) )  { $Data["Axis"][$AxisID]["Format"] = NULL; }
-       if ( !isset($Data["Axis"][$AxisID]["Unit"]) )    { $Data["Axis"][$AxisID]["Unit"] = NULL; }
+       if ( !isset($Data["Axis"][$AxisID]["Display"]) ) { $Data["Axis"][$AxisID]["Display"] = null; }
+       if ( !isset($Data["Axis"][$AxisID]["Format"]) )  { $Data["Axis"][$AxisID]["Format"] = null; }
+       if ( !isset($Data["Axis"][$AxisID]["Unit"]) )    { $Data["Axis"][$AxisID]["Unit"] = null; }
       }
 
      /* Get the default font color */
@@ -190,7 +190,7 @@ namespace Webklex\pChart;
 
            $Width = ($this->pChartObject->GraphAreaX2 - $this->pChartObject->GraphAreaX1) - $AxisSettings["Margin"]*2;
            $Step   = $Width / $AxisSettings["Rows"]; $SubTicksSize = $Step /2; $MaxBottom = $AxisPos["B"];
-           $LastX  = NULL;
+           $LastX  = null;
            for($i=0;$i<=$AxisSettings["Rows"];$i++)
             {
              $XPos  = $this->pChartObject->GraphAreaX1 + $AxisSettings["Margin"] + $Step*$i;
@@ -198,7 +198,7 @@ namespace Webklex\pChart;
              $Value = $this->pChartObject->scaleFormat($AxisSettings["ScaleMin"] + $AxisSettings["RowHeight"]*$i,$AxisSettings["Display"],$AxisSettings["Format"],$AxisSettings["Unit"]);
 
              if ( $i%2 == 1 ) { $BGColor = array("R"=>$BackgroundR1,"G"=>$BackgroundG1,"B"=>$BackgroundB1,"Alpha"=>$BackgroundAlpha1); } else { $BGColor = array("R"=>$BackgroundR2,"G"=>$BackgroundG2,"B"=>$BackgroundB2,"Alpha"=>$BackgroundAlpha2); }
-             if ( $LastX != NULL && $CycleBackground  && ( $DrawXLines == ALL || in_array($AxisID,$DrawXLines) )) { $this->pChartObject->drawFilledRectangle($LastX,$this->pChartObject->GraphAreaY1+$FloatingOffset,$XPos,$this->pChartObject->GraphAreaY2-$FloatingOffset,$BGColor); }
+             if ( $LastX != null && $CycleBackground  && ( $DrawXLines == ALL || in_array($AxisID,$DrawXLines) )) { $this->pChartObject->drawFilledRectangle($LastX,$this->pChartObject->GraphAreaY1+$FloatingOffset,$XPos,$this->pChartObject->GraphAreaY2-$FloatingOffset,$BGColor); }
 
              if ( $DrawXLines == ALL || in_array($AxisID,$DrawXLines) ) { $this->pChartObject->drawLine($XPos,$this->pChartObject->GraphAreaY1+$FloatingOffset,$XPos,$this->pChartObject->GraphAreaY2-$FloatingOffset,array("R"=>$GridR,"G"=>$GridG,"B"=>$GridB,"Alpha"=>$GridAlpha,"Ticks"=>$GridTicks)); }
              if ( $DrawSubTicks && $i != $AxisSettings["Rows"] )
@@ -240,7 +240,7 @@ namespace Webklex\pChart;
 
            $Width = ($this->pChartObject->GraphAreaX2 - $this->pChartObject->GraphAreaX1) - $AxisSettings["Margin"]*2;
            $Step   = $Width / $AxisSettings["Rows"]; $SubTicksSize = $Step /2; $MinTop = $AxisPos["T"];
-           $LastX  = NULL;
+           $LastX  = null;
            for($i=0;$i<=$AxisSettings["Rows"];$i++)
             {
              $XPos  = $this->pChartObject->GraphAreaX1 + $AxisSettings["Margin"] + $Step*$i;
@@ -248,7 +248,7 @@ namespace Webklex\pChart;
              $Value = $this->pChartObject->scaleFormat($AxisSettings["ScaleMin"] + $AxisSettings["RowHeight"]*$i,$AxisSettings["Display"],$AxisSettings["Format"],$AxisSettings["Unit"]);
 
              if ( $i%2 == 1 ) { $BGColor = array("R"=>$BackgroundR1,"G"=>$BackgroundG1,"B"=>$BackgroundB1,"Alpha"=>$BackgroundAlpha1); } else { $BGColor = array("R"=>$BackgroundR2,"G"=>$BackgroundG2,"B"=>$BackgroundB2,"Alpha"=>$BackgroundAlpha2); }
-             if ( $LastX != NULL && $CycleBackground  && ( $DrawXLines == ALL || in_array($AxisID,$DrawXLines) )) { $this->pChartObject->drawFilledRectangle($LastX,$this->pChartObject->GraphAreaY1+$FloatingOffset,$XPos,$this->pChartObject->GraphAreaY2-$FloatingOffset,$BGColor); }
+             if ( $LastX != null && $CycleBackground  && ( $DrawXLines == ALL || in_array($AxisID,$DrawXLines) )) { $this->pChartObject->drawFilledRectangle($LastX,$this->pChartObject->GraphAreaY1+$FloatingOffset,$XPos,$this->pChartObject->GraphAreaY2-$FloatingOffset,$BGColor); }
 
              if ( $DrawXLines == ALL || in_array($AxisID,$DrawXLines) ) { $this->pChartObject->drawLine($XPos,$this->pChartObject->GraphAreaY1+$FloatingOffset,$XPos,$this->pChartObject->GraphAreaY2-$FloatingOffset,array("R"=>$GridR,"G"=>$GridG,"B"=>$GridB,"Alpha"=>$GridAlpha,"Ticks"=>$GridTicks)); }
 
@@ -290,7 +290,7 @@ namespace Webklex\pChart;
 
            $Height = ($this->pChartObject->GraphAreaY2 - $this->pChartObject->GraphAreaY1) - $AxisSettings["Margin"]*2;
            $Step   = $Height / $AxisSettings["Rows"]; $SubTicksSize = $Step /2; $MinLeft = $AxisPos["L"];
-           $LastY  = NULL;
+           $LastY  = null;
            for($i=0;$i<=$AxisSettings["Rows"];$i++)
             {
              $YPos  = $this->pChartObject->GraphAreaY2 - $AxisSettings["Margin"] - $Step*$i;
@@ -298,7 +298,7 @@ namespace Webklex\pChart;
              $Value = $this->pChartObject->scaleFormat($AxisSettings["ScaleMin"] + $AxisSettings["RowHeight"]*$i,$AxisSettings["Display"],$AxisSettings["Format"],$AxisSettings["Unit"]);
 
              if ( $i%2 == 1 ) { $BGColor = array("R"=>$BackgroundR1,"G"=>$BackgroundG1,"B"=>$BackgroundB1,"Alpha"=>$BackgroundAlpha1); } else { $BGColor = array("R"=>$BackgroundR2,"G"=>$BackgroundG2,"B"=>$BackgroundB2,"Alpha"=>$BackgroundAlpha2); }
-             if ( $LastY != NULL && $CycleBackground && ( $DrawYLines == ALL || in_array($AxisID,$DrawYLines) )) { $this->pChartObject->drawFilledRectangle($this->pChartObject->GraphAreaX1+$FloatingOffset,$LastY,$this->pChartObject->GraphAreaX2-$FloatingOffset,$YPos,$BGColor); }
+             if ( $LastY != null && $CycleBackground && ( $DrawYLines == ALL || in_array($AxisID,$DrawYLines) )) { $this->pChartObject->drawFilledRectangle($this->pChartObject->GraphAreaX1+$FloatingOffset,$LastY,$this->pChartObject->GraphAreaX2-$FloatingOffset,$YPos,$BGColor); }
 
              if ( ($YPos != $this->pChartObject->GraphAreaY1 && $YPos != $this->pChartObject->GraphAreaY2) && ($DrawYLines == ALL || in_array($AxisID,$DrawYLines) )) { $this->pChartObject->drawLine($this->pChartObject->GraphAreaX1+$FloatingOffset,$YPos,$this->pChartObject->GraphAreaX2-$FloatingOffset,$YPos,array("R"=>$GridR,"G"=>$GridG,"B"=>$GridB,"Alpha"=>$GridAlpha,"Ticks"=>$GridTicks)); }
 
@@ -337,7 +337,7 @@ namespace Webklex\pChart;
 
            $Height = ($this->pChartObject->GraphAreaY2 - $this->pChartObject->GraphAreaY1) - $AxisSettings["Margin"]*2;
            $Step   = $Height / $AxisSettings["Rows"]; $SubTicksSize = $Step /2; $MaxLeft = $AxisPos["R"];
-           $LastY  = NULL;
+           $LastY  = null;
            for($i=0;$i<=$AxisSettings["Rows"];$i++)
             {
              $YPos  = $this->pChartObject->GraphAreaY2 - $AxisSettings["Margin"] - $Step*$i;
@@ -345,7 +345,7 @@ namespace Webklex\pChart;
              $Value = $this->pChartObject->scaleFormat($AxisSettings["ScaleMin"] + $AxisSettings["RowHeight"]*$i,$AxisSettings["Display"],$AxisSettings["Format"],$AxisSettings["Unit"]);
 
              if ( $i%2 == 1 ) { $BGColor = array("R"=>$BackgroundR1,"G"=>$BackgroundG1,"B"=>$BackgroundB1,"Alpha"=>$BackgroundAlpha1); } else { $BGColor = array("R"=>$BackgroundR2,"G"=>$BackgroundG2,"B"=>$BackgroundB2,"Alpha"=>$BackgroundAlpha2); }
-             if ( $LastY != NULL && $CycleBackground  && ( $DrawYLines == ALL || in_array($AxisID,$DrawYLines) )) { $this->pChartObject->drawFilledRectangle($this->pChartObject->GraphAreaX1+$FloatingOffset,$LastY,$this->pChartObject->GraphAreaX2-$FloatingOffset,$YPos,$BGColor); }
+             if ( $LastY != null && $CycleBackground  && ( $DrawYLines == ALL || in_array($AxisID,$DrawYLines) )) { $this->pChartObject->drawFilledRectangle($this->pChartObject->GraphAreaX1+$FloatingOffset,$LastY,$this->pChartObject->GraphAreaX2-$FloatingOffset,$YPos,$BGColor); }
 
              if ( ($YPos != $this->pChartObject->GraphAreaY1 && $YPos != $this->pChartObject->GraphAreaY2) && ($DrawYLines == ALL || in_array($AxisID,$DrawYLines)) ) { $this->pChartObject->drawLine($this->pChartObject->GraphAreaX1+$FloatingOffset,$YPos,$this->pChartObject->GraphAreaX2-$FloatingOffset,$YPos,array("R"=>$GridR,"G"=>$GridG,"B"=>$GridB,"Alpha"=>$GridAlpha,"Ticks"=>$GridTicks)); }
 
@@ -379,18 +379,18 @@ namespace Webklex\pChart;
     }
 
    /* Draw a scatter plot chart */
-   function drawScatterPlotChart($Format=NULL)
+   function drawScatterPlotChart($Format=null)
     {
      $PlotSize		= isset($Format["PlotSize"]) ? $Format["PlotSize"] : 3;
-     $PlotBorder	= isset($Format["PlotBorder"]) ? $Format["PlotBorder"] : FALSE;
+     $PlotBorder	= isset($Format["PlotBorder"]) ? $Format["PlotBorder"] : false;
      $BorderR		= isset($Format["BorderR"]) ? $Format["BorderR"] : 250;
      $BorderG		= isset($Format["BorderG"]) ? $Format["BorderG"] : 250;
      $BorderB		= isset($Format["BorderB"]) ? $Format["BorderB"] : 250;
      $BorderAlpha	= isset($Format["BorderAlpha"]) ? $Format["BorderAlpha"] : 30;
      $BorderSize	= isset($Format["BorderSize"]) ? $Format["BorderSize"] : 1;
-     $Surrounding	= isset($Format["Surrounding"]) ? $Format["Surrounding"] : NULL;
-     $RecordImageMap	= isset($Format["RecordImageMap"]) ? $Format["RecordImageMap"] : FALSE;
-     $ImageMapTitle	= isset($Format["ImageMapTitle"]) ? $Format["ImageMapTitle"] : NULL;
+     $Surrounding	= isset($Format["Surrounding"]) ? $Format["Surrounding"] : null;
+     $RecordImageMap	= isset($Format["RecordImageMap"]) ? $Format["RecordImageMap"] : false;
+     $ImageMapTitle	= isset($Format["ImageMapTitle"]) ? $Format["ImageMapTitle"] : null;
      $ImageMapPrecision = isset($Format["ImageMapPrecision"]) ? $Format["ImageMapPrecision"] : 2;
 
      $Data    = $this->pDataObject->getData();
@@ -400,17 +400,17 @@ namespace Webklex\pChart;
 
      foreach($Data["ScatterSeries"] as $Key => $Series)
       {
-       if ( $Series["isDrawable"] == TRUE )
+       if ( $Series["isDrawable"] == true )
         {
          $SerieX = $Series["X"]; $SerieValuesX = $Data["Series"][$SerieX]["Data"]; $SerieXAxis = $Data["Series"][$SerieX]["Axis"];
          $SerieY = $Series["Y"]; $SerieValuesY = $Data["Series"][$SerieY]["Data"]; $SerieYAxis = $Data["Series"][$SerieY]["Axis"];
 
-         if ( $ImageMapTitle == NULL ) { $Description = $Data["Series"][$Series["X"]]["Description"]." / ".$Data["Series"][$Series["Y"]]["Description"]; } else { $Description = $ImageMapTitle; }
+         if ( $ImageMapTitle == null ) { $Description = $Data["Series"][$Series["X"]]["Description"]." / ".$Data["Series"][$Series["Y"]]["Description"]; } else { $Description = $ImageMapTitle; }
          
          if ( isset($Series["Picture"]) && $Series["Picture"] != "" )
           { $Picture = $Series["Picture"]; list($PicWidth,$PicHeight,$PicType) = $this->pChartObject->getPicInfo($Picture); }
          else
-          { $Picture = NULL; }
+          { $Picture = null; }
 
          $PosArrayX = $this->getPosArray($SerieValuesX,$SerieXAxis);
          if ( !is_array($PosArrayX) ) { $Value = $PosArrayX; $PosArrayX = ""; $PosArrayX[0] = $Value; }
@@ -430,7 +430,7 @@ namespace Webklex\pChart;
 
              if( isset($Series["Shape"]) )
               { $this->pChartObject->drawShape($X,$Y,$Series["Shape"],$PlotSize,$PlotBorder,$BorderSize,$Series["Color"]["R"],$Series["Color"]["G"],$Series["Color"]["B"],$Series["Color"]["Alpha"],$BorderR,$BorderG,$BorderB,$BorderAlpha); }
-             elseif ( $Picture == NULL )
+             elseif ( $Picture == null )
               {
                if ( $PlotBorder ) { $this->pChartObject->drawFilledCircle($X,$Y,$PlotSize+$BorderSize,$BorderColor); }
                $this->pChartObject->drawFilledCircle($X,$Y,$PlotSize,$Color);
@@ -444,26 +444,26 @@ namespace Webklex\pChart;
     }
 
    /* Draw a scatter line chart */
-   function drawScatterLineChart($Format=NULL)
+   function drawScatterLineChart($Format=null)
     {
      $Data		= $this->pDataObject->getData();
      $Palette		= $this->pDataObject->getPalette();
-     $RecordImageMap	= isset($Format["RecordImageMap"]) ? $Format["RecordImageMap"] : FALSE;
-     $ImageMapTitle	= isset($Format["ImageMapTitle"]) ? $Format["ImageMapTitle"] : NULL;
+     $RecordImageMap	= isset($Format["RecordImageMap"]) ? $Format["RecordImageMap"] : false;
+     $ImageMapTitle	= isset($Format["ImageMapTitle"]) ? $Format["ImageMapTitle"] : null;
      $ImageMapPlotSize	= isset($Format["ImageMapPlotSize"]) ? $Format["ImageMapPlotSize"] : 10;
      $ImageMapPrecision = isset($Format["ImageMapPrecision"]) ? $Format["ImageMapPrecision"] : 2;
 
      /* Parse all the series to draw */
      foreach($Data["ScatterSeries"] as $Key => $Series)
       {
-       if ( $Series["isDrawable"] == TRUE )
+       if ( $Series["isDrawable"] == true )
         {
          $SerieX = $Series["X"]; $SerieValuesX = $Data["Series"][$SerieX]["Data"]; $SerieXAxis = $Data["Series"][$SerieX]["Axis"];
          $SerieY = $Series["Y"]; $SerieValuesY = $Data["Series"][$SerieY]["Data"]; $SerieYAxis = $Data["Series"][$SerieY]["Axis"];
          $Ticks  = $Series["Ticks"];
          $Weight = $Series["Weight"];
 
-         if ( $ImageMapTitle == NULL ) { $Description = $Data["Series"][$Series["X"]]["Description"]." / ".$Data["Series"][$Series["Y"]]["Description"]; } else { $Description = $ImageMapTitle; }
+         if ( $ImageMapTitle == null ) { $Description = $Data["Series"][$Series["X"]]["Description"]." / ".$Data["Series"][$Series["Y"]]["Description"]; } else { $Description = $ImageMapTitle; }
 
          $PosArrayX = $this->getPosArray($SerieValuesX,$SerieXAxis);
          if ( !is_array($PosArrayX) ) { $Value = $PosArrayX; $PosArrayX = ""; $PosArrayX[0] = $Value; }
@@ -495,25 +495,25 @@ namespace Webklex\pChart;
     }
 
    /* Draw a scatter spline chart */
-   function drawScatterSplineChart($Format=NULL)
+   function drawScatterSplineChart($Format=null)
     {
      $Data		= $this->pDataObject->getData();
      $Palette		= $this->pDataObject->getPalette();
-     $RecordImageMap	= isset($Format["RecordImageMap"]) ? $Format["RecordImageMap"] : FALSE;
-     $ImageMapTitle	= isset($Format["ImageMapTitle"]) ? $Format["ImageMapTitle"] : NULL;
+     $RecordImageMap	= isset($Format["RecordImageMap"]) ? $Format["RecordImageMap"] : false;
+     $ImageMapTitle	= isset($Format["ImageMapTitle"]) ? $Format["ImageMapTitle"] : null;
      $ImageMapPlotSize	= isset($Format["ImageMapPlotSize"]) ? $Format["ImageMapPlotSize"] : 10;
      $ImageMapPrecision = isset($Format["ImageMapPrecision"]) ? $Format["ImageMapPrecision"] : 2;
 
      foreach($Data["ScatterSeries"] as $Key => $Series)
       {
-       if ( $Series["isDrawable"] == TRUE )
+       if ( $Series["isDrawable"] == true )
         {
          $SerieX = $Series["X"]; $SerieValuesX = $Data["Series"][$SerieX]["Data"]; $SerieXAxis = $Data["Series"][$SerieX]["Axis"];
          $SerieY = $Series["Y"]; $SerieValuesY = $Data["Series"][$SerieY]["Data"]; $SerieYAxis = $Data["Series"][$SerieY]["Axis"];
          $Ticks  = $Series["Ticks"];
          $Weight = $Series["Weight"];
 
-         if ( $ImageMapTitle == NULL ) { $Description = $Data["Series"][$Series["X"]]["Description"]." / ".$Data["Series"][$Series["Y"]]["Description"]; } else { $Description = $ImageMapTitle; }
+         if ( $ImageMapTitle == null ) { $Description = $Data["Series"][$Series["X"]]["Description"]." / ".$Data["Series"][$Series["Y"]]["Description"]; } else { $Description = $ImageMapTitle; }
 
          $PosArrayX = $this->getPosArray($SerieValuesX,$SerieXAxis);
          if ( !is_array($PosArrayX) ) { $Value = $PosArrayX; $PosArrayX = ""; $PosArrayX[0] = $Value; }
@@ -615,17 +615,17 @@ namespace Webklex\pChart;
      $BorderR		= isset($Format["BorderR"]) ? $Format["BorderR"] : 255;
      $BorderG		= isset($Format["BorderG"]) ? $Format["BorderG"] : 255;
      $BorderB		= isset($Format["BorderB"]) ? $Format["BorderB"] : 255;
-     $Surrounding	= isset($Format["Surrounding"]) ? $Format["Surrounding"] : NULL;
+     $Surrounding	= isset($Format["Surrounding"]) ? $Format["Surrounding"] : null;
      $Style		= isset($Format["Style"]) ? $Format["Style"] : LEGEND_ROUND;
      $Mode		= isset($Format["Mode"]) ? $Format["Mode"] : LEGEND_VERTICAL;
 
-     if ( $Surrounding != NULL ) { $BorderR = $R + $Surrounding; $BorderG = $G + $Surrounding; $BorderB = $B + $Surrounding; }
+     if ( $Surrounding != null ) { $BorderR = $R + $Surrounding; $BorderG = $G + $Surrounding; $BorderB = $B + $Surrounding; }
 
      $Data = $this->pDataObject->getData();
 
      foreach($Data["ScatterSeries"] as $Key => $Series)
       {
-       if ( $Series["isDrawable"] == TRUE && isset($Series["Picture"]))
+       if ( $Series["isDrawable"] == true && isset($Series["Picture"]))
         {
          list($PicWidth,$PicHeight) = $this->pChartObject->getPicInfo($Series["Picture"]);
          if ( $IconAreaWidth < $PicWidth ) { $IconAreaWidth = $PicWidth; }
@@ -640,7 +640,7 @@ namespace Webklex\pChart;
      $Boundaries = ""; $Boundaries["L"] = $X; $Boundaries["T"] = $Y; $Boundaries["R"] = 0; $Boundaries["B"] = 0; $vY = $Y; $vX = $X;
      foreach($Data["ScatterSeries"] as $Key => $Series)
       {
-       if ( $Series["isDrawable"] == TRUE )
+       if ( $Series["isDrawable"] == true )
         {
          if ( $Mode == LEGEND_VERTICAL )
           {
@@ -682,10 +682,10 @@ namespace Webklex\pChart;
      elseif ( $Style == LEGEND_BOX )
       $this->pChartObject->drawFilledRectangle($Boundaries["L"]-$Margin,$Boundaries["T"]-$Margin,$Boundaries["R"]+$Margin,$Boundaries["B"]+$Margin,array("R"=>$R,"G"=>$G,"B"=>$B,"Alpha"=>$Alpha,"BorderR"=>$BorderR,"BorderG"=>$BorderG,"BorderB"=>$BorderB));
 
-     $RestoreShadow = $this->pChartObject->Shadow; $this->Shadow = FALSE;
+     $RestoreShadow = $this->pChartObject->Shadow; $this->Shadow = false;
      foreach($Data["ScatterSeries"] as $Key => $Series)
       {
-       if ( $Series["isDrawable"] == TRUE )
+       if ( $Series["isDrawable"] == true )
         {
          $R = $Series["Color"]["R"]; $G = $Series["Color"]["G"]; $B = $Series["Color"]["B"];
          $Ticks = $Series["Ticks"]; $Weight = $Series["Weight"];
@@ -764,7 +764,7 @@ namespace Webklex\pChart;
 
      foreach($Data["ScatterSeries"] as $Key => $Series)
       {
-       if ( $Series["isDrawable"] == TRUE && isset($Series["Picture"]))
+       if ( $Series["isDrawable"] == true && isset($Series["Picture"]))
         {
          list($PicWidth,$PicHeight) = $this->pChartObject->getPicInfo($Series["Picture"]);
          if ( $IconAreaWidth < $PicWidth ) { $IconAreaWidth = $PicWidth; }
@@ -779,7 +779,7 @@ namespace Webklex\pChart;
      $Boundaries = ""; $Boundaries["L"] = $X; $Boundaries["T"] = $Y; $Boundaries["R"] = 0; $Boundaries["B"] = 0; $vY = $Y; $vX = $X;
      foreach($Data["ScatterSeries"] as $Key => $Series)
       {
-       if ( $Series["isDrawable"] == TRUE )
+       if ( $Series["isDrawable"] == true )
         {
          if ( $Mode == LEGEND_VERTICAL )
           {
@@ -819,7 +819,7 @@ namespace Webklex\pChart;
      $Width  = ($Boundaries["R"]+$Margin) - ($Boundaries["L"]-$Margin);
      $Height = ($Boundaries["B"]+$Margin) - ($Boundaries["T"]-$Margin);
 
-     return(array("Width"=>$Width,"Height"=>$Height));
+     return array("Width"=>$Width,"Height"=>$Height);
     }
 
    /* Draw the line of best fit */
@@ -831,7 +831,7 @@ namespace Webklex\pChart;
 
      foreach($Data["ScatterSeries"] as $Key => $Series)
       {
-       if ( $Series["isDrawable"] == TRUE )
+       if ( $Series["isDrawable"] == true )
         {
          $SerieX = $Series["X"]; $SerieValuesX = $Data["Series"][$SerieX]["Data"]; $SerieXAxis = $Data["Series"][$SerieX]["Axis"];
          $SerieY = $Series["Y"]; $SerieValuesY = $Data["Series"][$SerieY]["Data"]; $SerieYAxis = $Data["Series"][$SerieY]["Axis"];
@@ -887,9 +887,9 @@ namespace Webklex\pChart;
 
    function writeScatterLabel($ScatterSerieID,$Points,$Format="")
     {
-     $OverrideTitle	= isset($Format["OverrideTitle"]) ? $Format["OverrideTitle"] : NULL;
+     $OverrideTitle	= isset($Format["OverrideTitle"]) ? $Format["OverrideTitle"] : null;
      $DrawPoint		= isset($Format["DrawPoint"]) ? $Format["DrawPoint"] : LABEL_POINT_BOX;
-     $Decimals		= isset($Format["Decimals"]) ? $Format["Decimals"] : NULL;
+     $Decimals		= isset($Format["Decimals"]) ? $Format["Decimals"] : null;
 
      $Data    = $this->pDataObject->getData();
      $Palette = $this->pDataObject->getPalette();
@@ -897,7 +897,7 @@ namespace Webklex\pChart;
      if ( !is_array($Points) ) { $Point = $Points; $Points = ""; $Points[0] = $Point; }
 
      if ( !isset($Data["ScatterSeries"][$ScatterSerieID]) ) 
-      return(0);
+      return 0;
 
      $Series = $Data["ScatterSeries"][$ScatterSerieID];
      $SerieX = $Series["X"]; $SerieValuesX = $Data["Series"][$SerieX]["Data"]; $SerieXAxis = $Data["Series"][$SerieX]["Axis"];
@@ -929,13 +929,13 @@ namespace Webklex\pChart;
          $XAxisMode   = $Data["Axis"][$SerieXAxis]["Display"];
          $XAxisFormat = $Data["Axis"][$SerieXAxis]["Format"];
          $XAxisUnit   = $Data["Axis"][$SerieXAxis]["Unit"];
-         if ( $Decimals == NULL ) { $XValue = $SerieValuesX[$Point]; } else { $XValue = round($SerieValuesX[$Point],$Decimals); }
+         if ( $Decimals == null ) { $XValue = $SerieValuesX[$Point]; } else { $XValue = round($SerieValuesX[$Point],$Decimals); }
          $XValue      = $this->pChartObject->scaleFormat($XValue,$XAxisMode,$XAxisFormat,$XAxisUnit);
 
          $YAxisMode   = $Data["Axis"][$SerieYAxis]["Display"];
          $YAxisFormat = $Data["Axis"][$SerieYAxis]["Format"];
          $YAxisUnit   = $Data["Axis"][$SerieYAxis]["Unit"];
-         if ( $Decimals == NULL ) { $YValue = $SerieValuesY[$Point]; } else { $YValue = round($SerieValuesY[$Point],$Decimals); }
+         if ( $Decimals == null ) { $YValue = $SerieValuesY[$Point]; } else { $YValue = round($SerieValuesY[$Point],$Decimals); }
          $YValue      = $this->pChartObject->scaleFormat($YValue,$YAxisMode,$YAxisFormat,$YAxisUnit);
 
          $Caption = $XValue." / ".$YValue;
@@ -961,22 +961,22 @@ namespace Webklex\pChart;
      $G			= isset($Format["G"]) ? $Format["G"] : 0;
      $B			= isset($Format["B"]) ? $Format["B"] : 0;
      $Alpha		= isset($Format["Alpha"]) ? $Format["Alpha"] : 50;
-     $Weight		= isset($Format["Weight"]) ? $Format["Weight"] : NULL;
+     $Weight		= isset($Format["Weight"]) ? $Format["Weight"] : null;
      $Ticks		= isset($Format["Ticks"]) ? $Format["Ticks"] : 3;
-     $Wide		= isset($Format["Wide"]) ? $Format["Wide"] : FALSE;
+     $Wide		= isset($Format["Wide"]) ? $Format["Wide"] : false;
      $WideFactor	= isset($Format["WideFactor"]) ? $Format["WideFactor"] : 5;
-     $WriteCaption	= isset($Format["WriteCaption"]) ? $Format["WriteCaption"] : FALSE;
-     $Caption		= isset($Format["Caption"]) ? $Format["Caption"] : NULL;
+     $WriteCaption	= isset($Format["WriteCaption"]) ? $Format["WriteCaption"] : false;
+     $Caption		= isset($Format["Caption"]) ? $Format["Caption"] : null;
      $CaptionAlign	= isset($Format["CaptionAlign"]) ? $Format["CaptionAlign"] : CAPTION_LEFT_TOP;
      $CaptionOffset     = isset($Format["CaptionOffset"]) ? $Format["CaptionOffset"] : 10;
      $CaptionR		= isset($Format["CaptionR"]) ? $Format["CaptionR"] : 255;
      $CaptionG		= isset($Format["CaptionG"]) ? $Format["CaptionG"] : 255;
      $CaptionB		= isset($Format["CaptionB"]) ? $Format["CaptionB"] : 255;
      $CaptionAlpha	= isset($Format["CaptionAlpha"]) ? $Format["CaptionAlpha"] : 100;
-     $DrawBox		= isset($Format["DrawBox"]) ? $Format["DrawBox"] : TRUE;
-     $DrawBoxBorder	= isset($Format["DrawBoxBorder"]) ? $Format["DrawBoxBorder"] : FALSE;
+     $DrawBox		= isset($Format["DrawBox"]) ? $Format["DrawBox"] : true;
+     $DrawBoxBorder	= isset($Format["DrawBoxBorder"]) ? $Format["DrawBoxBorder"] : false;
      $BorderOffset	= isset($Format["BorderOffset"]) ? $Format["BorderOffset"] : 5;
-     $BoxRounded	= isset($Format["BoxRounded"]) ? $Format["BoxRounded"] : TRUE;
+     $BoxRounded	= isset($Format["BoxRounded"]) ? $Format["BoxRounded"] : true;
      $RoundedRadius	= isset($Format["RoundedRadius"]) ? $Format["RoundedRadius"] : 3;
      $BoxR		= isset($Format["BoxR"]) ? $Format["BoxR"] : 0;
      $BoxG		= isset($Format["BoxG"]) ? $Format["BoxG"] : 0;
@@ -993,7 +993,7 @@ namespace Webklex\pChart;
                               "BoxBorderR"=>$BoxBorderR,"BoxBorderG"=>$BoxBorderG,"BoxBorderB"=>$BoxBorderB,"BoxBorderAlpha"=>$BoxBorderAlpha,
                               "R"=>$CaptionR,"G"=>$CaptionG,"B"=>$CaptionB,"Alpha"=>$CaptionAlpha);
 
-     if ( $Caption == NULL ) { $Caption = $Value; }
+     if ( $Caption == null ) { $Caption = $Value; }
 
      $Data = $this->pDataObject->getData();
 
@@ -1023,7 +1023,7 @@ namespace Webklex\pChart;
          $this->pChartObject->drawText($X,$Y,$Caption,$CaptionSettings);
         }
 
-       return(array("Y"=>$Y));
+       return array("Y"=>$Y);
       }
      elseif ( $Data["Axis"][$AxisID]["Identity"] == AXIS_X )
       {
@@ -1050,7 +1050,7 @@ namespace Webklex\pChart;
          $this->pChartObject->drawText($X,$Y,$Caption,$CaptionSettings);
         }
 
-       return(array("X"=>$X));
+       return array("X"=>$X);
       }
     }
 
@@ -1062,24 +1062,24 @@ namespace Webklex\pChart;
      $G		= isset($Format["G"]) ? $Format["G"] : 0;
      $B		= isset($Format["B"]) ? $Format["B"] : 0;
      $Alpha	= isset($Format["Alpha"]) ? $Format["Alpha"] : 20;
-     $Border    = isset($Format["Border"]) ? $Format["Border"] : TRUE;
+     $Border    = isset($Format["Border"]) ? $Format["Border"] : true;
      $BorderR   = isset($Format["BorderR"]) ? $Format["BorderR"] : $R;
      $BorderG   = isset($Format["BorderG"]) ? $Format["BorderG"] : $G;
      $BorderB   = isset($Format["BorderB"]) ? $Format["BorderB"] : $B;
      $BorderAlpha = isset($Format["BorderAlpha"]) ? $Format["BorderAlpha"] : $Alpha + 20;
      $BorderTicks = isset($Format["BorderTicks"]) ? $Format["BorderTicks"] : 2;
-     $AreaName 	= isset($Format["AreaName"]) ? $Format["AreaName"] : "La ouate de phoque"; //NULL;
+     $AreaName 	= isset($Format["AreaName"]) ? $Format["AreaName"] : "La ouate de phoque"; //null;
      $NameAngle	= isset($Format["NameAngle"]) ? $Format["NameAngle"] : ZONE_NAME_ANGLE_AUTO;
      $NameR	= isset($Format["NameR"]) ? $Format["NameR"] : 255;
      $NameG	= isset($Format["NameG"]) ? $Format["NameG"] : 255;
      $NameB	= isset($Format["NameB"]) ? $Format["NameB"] : 255;
      $NameAlpha	= isset($Format["NameAlpha"]) ? $Format["NameAlpha"] : 100;
-     $DisableShadowOnArea = isset($Format["DisableShadowOnArea"]) ? $Format["DisableShadowOnArea"] : TRUE;
+     $DisableShadowOnArea = isset($Format["DisableShadowOnArea"]) ? $Format["DisableShadowOnArea"] : true;
 
      if ($Value1 > $Value2) { list($Value1, $Value2) = array($Value2, $Value1); }
 
      $RestoreShadow = $this->pChartObject->Shadow;
-     if ( $DisableShadowOnArea && $this->pChartObject->Shadow ) { $this->pChartObject->Shadow = FALSE; }
+     if ( $DisableShadowOnArea && $this->pChartObject->Shadow ) { $this->pChartObject->Shadow = false; }
 
      if ($BorderAlpha >100) { $BorderAlpha = 100;}
 
@@ -1105,7 +1105,7 @@ namespace Webklex\pChart;
          $this->pChartObject->drawLine($X2,$Y1,$X2,$Y2,array("R"=>$BorderR,"G"=>$BorderG,"B"=>$BorderB,"Alpha"=>$BorderAlpha,"Ticks"=>$BorderTicks));
         }
 
-       if ( $AreaName != NULL )
+       if ( $AreaName != null )
         {
          $XPos = ($X2-$X1)/2 + $X1;
          $YPos = ($Y2-$Y1)/2 + $Y1;
@@ -1118,11 +1118,11 @@ namespace Webklex\pChart;
           }
          $this->pChartObject->Shadow = $RestoreShadow;
          $this->pChartObject->drawText($XPos,$YPos,$AreaName,array("R"=>$NameR,"G"=>$NameG,"B"=>$NameB,"Alpha"=>$NameAlpha,"Angle"=>$NameAngle,"Align"=>TEXT_ALIGN_MIDDLEMIDDLE));
-         if ( $DisableShadowOnArea ) { $this->pChartObject->Shadow = FALSE; }
+         if ( $DisableShadowOnArea ) { $this->pChartObject->Shadow = false; }
         }
 
        $this->pChartObject->Shadow = $RestoreShadow;
-       return(array("X1"=>$X1,"X2"=>$X2));
+       return array("X1"=>$X1,"X2"=>$X2);
       }
      elseif ( $Data["Axis"][$AxisID]["Identity"] == AXIS_Y )
       {
@@ -1142,18 +1142,18 @@ namespace Webklex\pChart;
          $this->pChartObject->drawLine($X1,$Y2,$X2,$Y2,array("R"=>$BorderR,"G"=>$BorderG,"B"=>$BorderB,"Alpha"=>$BorderAlpha,"Ticks"=>$BorderTicks));
         }
 
-       if ( $AreaName != NULL )
+       if ( $AreaName != null )
         {
          $XPos = ($X2-$X1)/2 + $X1;
          $YPos = ($Y2-$Y1)/2 + $Y1;
 
          $this->pChartObject->Shadow = $RestoreShadow;
          $this->pChartObject->drawText($YPos,$XPos,$AreaName,array("R"=>$NameR,"G"=>$NameG,"B"=>$NameB,"Alpha"=>$NameAlpha,"Angle"=>0,"Align"=>TEXT_ALIGN_MIDDLEMIDDLE));
-         if ( $DisableShadowOnArea ) { $this->Shadow = FALSE; }
+         if ( $DisableShadowOnArea ) { $this->Shadow = false; }
         }
 
        $this->pChartObject->Shadow = $RestoreShadow;
-       return(array("Y1"=>$Y1,"Y2"=>$Y2));
+       return array("Y1"=>$Y1,"Y2"=>$Y2);
       }
     }
   }
