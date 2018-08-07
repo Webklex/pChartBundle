@@ -1,13 +1,13 @@
 {
-    "name": "webklex/pChart",
+    "name": "webklex/pchart",
     "type": "library",
-    "description": "pChart",
+    "description": "pChart integration for frameworks such as Laravel and Symfony",
     "keywords": [
         "webklex",
         "laravel",
         "pChartBundle"
     ],
-    "homepage": "https://github.com/webklex/pChartBundle",
+    "homepage": "https://github.com/webklex/pchart",
     "license": "MIT",
     "authors": [
         {
