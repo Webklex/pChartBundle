@@ -34,7 +34,8 @@ namespace Webklex\pChart;
     var $pDraw;
     var $GridSizeX;
     var $GridSizeY;
-    var $Points;
+    var $GridSize;
+    var $points;
 
      /**
       * pSurface constructor.
@@ -48,18 +49,18 @@ namespace Webklex\pChart;
 
      /**
       * Define the grid size and initialise the 2D matrix
-      * @param int $XSize
-      * @param int $YSize
+      * @param int $x_size
+      * @param int $y_size
       */
-    function setGrid($XSize = 10, $YSize = 10) {
-        for($X = 0; $X <= $XSize; $X++) {
-            for($Y = 0; $Y <= $YSize; $Y++) {
-                $this->Points[$X][$Y]=UNKNOWN;
+    function setGrid($x_size = 10, $y_size = 10) {
+        for($x = 0; $x <= $x_size; $x++) {
+            for($y = 0; $y <= $y_size; $y++) {
+                $this->Points[$x][$y] = UNKNOWN;
             }
         }
 
-        $this->GridSizeX = $XSize;
-        $this->GridSizeY = $YSize;
+        $this->GridSizeX = $x_size;
+        $this->GridSizeY = $y_size;
     }
 
      /**
@@ -72,7 +73,9 @@ namespace Webklex\pChart;
       * @return boolean
       */
     function addPoint($x, $y, $value, $force = true) {
-        if (($x < 0 || $x > $this->GridSizeX) || ($y < 0 || $y > $this->GridSizeY)) { return false; }
+        if (($x < 0 || $x > $this->GridSizeX) || ($y < 0 || $y > $this->GridSizeY)) { 
+            return false; 
+        }
 
         if ( $this->Points[$x][$y] == UNKNOWN || $force ) {
             $this->Points[$x][$y] = $value;
@@ -87,7 +90,7 @@ namespace Webklex\pChart;
 
      /**
       * Write the X labels
-      * @param array $Format
+      * @param array $format
       *
       * @return int
       */
@@ -103,21 +106,16 @@ namespace Webklex\pChart;
             "Labels"    => null,
             "CountOffset"   => 0,
         ];
-
-        foreach($default as $key => $value){
-            if(isset($format[$key]) === false){
-                $format[$key] = $value;
-            }
-        }
+        $format = array_merge($default, $format);
 
          if ( $format['Labels'] != null && !is_array($format['Labels']) ) {
              $format['Labels'] = [$format['Labels']];
          }
 
-         $X0    = $this->pDraw->GraphAreaX1;
-         $XSize = ($this->pDraw->GraphAreaX2 - $this->pDraw->GraphAreaX1) / ($this->GridSizeX+1);
+         $x0    = $this->pDraw->GraphAreaX1;
+         $x_size = ($this->pDraw->GraphAreaX2 - $this->pDraw->GraphAreaX1) / ($this->GridSizeX+1);
 
-         $Settings = [
+         $settings = [
              "R"    => $format['R'],
              "G"    => $format['G'],
              "B"    => $format['B'],
@@ -126,232 +124,287 @@ namespace Webklex\pChart;
          ];
 
          if($format['Position'] == LABEL_POSITION_TOP ) {
-             $YPos    = $this->pDraw->GraphAreaY1 - $format['Padding'];
-             $Settings["Align"] = $format['Angle'] == 0 ? TEXT_ALIGN_BOTTOMMIDDLE : TEXT_ALIGN_MIDDLELEFT;
+             $y_pos    = $this->pDraw->GraphAreaY1 - $format['Padding'];
+             $settings["Align"] = $format['Angle'] == 0 ? TEXT_ALIGN_BOTTOMMIDDLE : TEXT_ALIGN_MIDDLELEFT;
          } elseif ( $format['Position'] == LABEL_POSITION_BOTTOM ) {
-             $YPos    = $this->pDraw->GraphAreaY2 + $format['Padding'];
-             $Settings["Align"] = $format['Angle'] == 0 ? TEXT_ALIGN_BOTTOMMIDDLE : TEXT_ALIGN_MIDDLELEFT;
+             $y_pos    = $this->pDraw->GraphAreaY2 + $format['Padding'];
+             $settings["Align"] = $format['Angle'] == 0 ? TEXT_ALIGN_BOTTOMMIDDLE : TEXT_ALIGN_MIDDLELEFT;
          } else {
              return -1;
          }
 
          for($x=0; $x <= $this->GridSizeX; $x++) {
-            $XPos = floor($X0 + $x * $XSize + $XSize / 2);
+            $x_pos = floor($x0 + $x * $x_size + $x_size / 2);
 
             if( $format['Labels'] == null ) {
-                $Value = $x + $format['CountOffset'];
+                $value = $x + $format['CountOffset'];
             } else {
-                $Value = isset($format['Labels'][$x]) ? $format['Labels'][$x] : $x + $format['CountOffset'];
+                $value = isset($format['Labels'][$x]) ? $format['Labels'][$x] : $x + $format['CountOffset'];
             }
 
-            $this->pDraw->drawText($XPos, $YPos, $Value, $Settings);
+            $this->pDraw->drawText($x_pos, $y_pos, $value, $settings);
          }
 
          return 1;
     }
 
-    /* Write the Y labels */
-    function writeYLabels($Format="") {
-     $R			= isset($Format["R"]) ? $Format["R"] : $this->pDraw->FontColorR;
-     $G			= isset($Format["G"]) ? $Format["G"] : $this->pDraw->FontColorG;
-     $B			= isset($Format["B"]) ? $Format["B"] : $this->pDraw->FontColorB;
-     $Alpha		= isset($Format["Alpha"]) ? $Format["Alpha"] : $this->pDraw->FontColorA;
-     $Angle		= isset($Format["Angle"]) ? $Format["Angle"] : 0;
-     $Padding		= isset($Format["Padding"]) ? $Format["Padding"] : 5;
-     $Position		= isset($Format["Position"]) ? $Format["Position"] : LABEL_POSITION_LEFT;
-     $Labels		= isset($Format["Labels"]) ? $Format["Labels"] : null;
-     $CountOffset	= isset($Format["CountOffset"]) ? $Format["CountOffset"] : 0;
+     /**
+      * Write the Y labels
+      * @param array $format
+      * 
+      * @return int
+      */
+    function writeYLabels($format = []) {
+        $default = [
+            "R" => $this->pDraw->FontColorR,
+            "G" => $this->pDraw->FontColorG,
+            "B" => $this->pDraw->FontColorB,
+            "Alpha" => $this->pDraw->FontColorA,
+            "Angle" => 0,
+            "Padding"   => 5,
+            "Position"  => LABEL_POSITION_TOP,
+            "Labels"    => null,
+            "CountOffset"   => 0,
+        ];
+        $format = array_merge($default, $format);
 
-     if ( $Labels != null && !is_array($Labels) ) { $Label = $Labels; $Labels = ""; $Labels[] = $Label; }
+        if ( $format['Labels'] != null && !is_array($format['Labels']) ) {
+            $format['Labels'] = [$format['Labels']];
+        }
 
-     $Y0    = $this->pDraw->GraphAreaY1;
-     $YSize = ($this->pDraw->GraphAreaY2 - $this->pDraw->GraphAreaY1) / ($this->GridSizeY+1);
+        $y0    = $this->pDraw->GraphAreaY1;
+        $y_size = ($this->pDraw->GraphAreaY2 - $this->pDraw->GraphAreaY1) / ($this->GridSizeY+1);
 
-     $Settings = array("Angle"=>$Angle,"R"=>$R,"G"=>$G,"B"=>$B,"Alpha"=>$Alpha);
-     if ( $Position == LABEL_POSITION_LEFT )
-       { $XPos    = $this->pDraw->GraphAreaX1 - $Padding; $Settings["Align"] = TEXT_ALIGN_MIDDLERIGHT; }
-     elseif ( $Position == LABEL_POSITION_RIGHT )
-       { $XPos    = $this->pDraw->GraphAreaX2 + $Padding; $Settings["Align"] = TEXT_ALIGN_MIDDLELEFT; }
-     else
-       return -1;
+        $settings = [
+            "R"    => $format['R'],
+            "G"    => $format['G'],
+            "B"    => $format['B'],
+            "Alpha"    => $format['Alpha'],
+            "Angle"    => $format['Angle']
+        ];
+        
+        if($format['Position'] == LABEL_POSITION_TOP ) {
+            $x_pos    = $this->pDraw->GraphAreaX1 - $format['Padding'];
+            $settings["Align"] = $format['Angle'] == 0 ? TEXT_ALIGN_BOTTOMMIDDLE : TEXT_ALIGN_MIDDLELEFT;
+        } elseif ( $format['Position'] == LABEL_POSITION_BOTTOM ) {
+            $x_pos    = $this->pDraw->GraphAreaX2 + $format['Padding'];
+            $settings["Align"] = $format['Angle'] == 0 ? TEXT_ALIGN_BOTTOMMIDDLE : TEXT_ALIGN_MIDDLELEFT;
+        } else {
+            return -1;
+        }
+        
+        for($y = 0; $y <= $this->GridSizeY; $y++) {
+            $y_pos = floor($y0 + $y * $y_size + $y_size / 2);
+            
+            if( $format['Labels'] == null ) {
+                $value = $y + $format['CountOffset'];
+            } else {
+                $value = isset($format['Labels'][$y]) ? $format['Labels'][$y] : $y + $format['CountOffset'];
+            }
+            
+            $this->pDraw->drawText($x_pos, $y_pos, $value, $settings);
+        }
 
-     for($Y=0;$Y<=$this->GridSizeY;$Y++)
-       {
-        $YPos = floor($Y0+$Y*$YSize + $YSize/2);
-
-        if( $Labels == null || !isset($Labels[$Y]) )
-          $Value = $Y+$CountOffset;
-        else
-          $Value = $Labels[$Y];
-
-        $this->pDraw->drawText($XPos,$YPos,$Value,$Settings);
-       }
+        return 1;
     }
 
-    /* Draw the area arround the specified Threshold */
-    function drawContour($Threshold,$Format="")
-    {
-     $R		= isset($Format["R"]) ? $Format["R"] : 0;
-     $G		= isset($Format["G"]) ? $Format["G"] : 0;
-     $B		= isset($Format["B"]) ? $Format["B"] : 0;
-     $Alpha	= isset($Format["Alpha"]) ? $Format["Alpha"] : 100;
-     $Ticks	= isset($Format["Ticks"]) ? $Format["Ticks"] : 3;
-     $Padding	= isset($Format["Padding"]) ? $Format["Padding"] : 0;
+     /**
+      * Draw the area arround the specified Threshold
+      * @param $threshold
+      * @param array $format
+      */
+    function drawContour($threshold, $format = []) {
+        $default = [
+            "R" => 0,
+            "G" => 0,
+            "B" => 0,
+            "Alpha" => 100,
+            "Ticks" => 3,
+            "Padding"   => 0
+        ];
+        $format = array_merge($default, $format);
 
-     $X0    = $this->pDraw->GraphAreaX1;
-     $Y0    = $this->pDraw->GraphAreaY1;
-     $XSize = ($this->pDraw->GraphAreaX2 - $this->pDraw->GraphAreaX1) / ($this->GridSizeX+1);
-     $YSize = ($this->pDraw->GraphAreaY2 - $this->pDraw->GraphAreaY1) / ($this->GridSizeY+1);
+        $color = [
+            "R"    => $format['R'],
+            "G"    => $format['G'],
+            "B"    => $format['B'],
+            "Alpha"    => $format['Alpha'],
+            "Ticks"    => $format['Ticks']
+        ];
+        
+        $x0    = $this->pDraw->GraphAreaX1;
+        $y0    = $this->pDraw->GraphAreaY1;
+        $x_size = ($this->pDraw->GraphAreaX2 - $this->pDraw->GraphAreaX1) / ($this->GridSizeX+1);
+        $y_size = ($this->pDraw->GraphAreaY2 - $this->pDraw->GraphAreaY1) / ($this->GridSizeY+1);
+        
+        for($x = 0; $x <= $this->GridSizeX; $x++) {
+            for($y = 0; $y <= $this->GridSizeY; $y++) {
+                $value = $this->Points[$x][$y];
 
-     $Color = array("R"=>$R,"G"=>$G,"B"=>$B,"Alpha"=>$Alpha,"Ticks"=>$Ticks);
-
-     for($X=0;$X<=$this->GridSizeX;$X++)
-       {
-        for($Y=0;$Y<=$this->GridSizeY;$Y++)
-          {
-        $Value = $this->Points[$X][$Y];
-
-        if ( $Value != UNKNOWN && $Value != IGNORED && $Value >= $Threshold)
-          {
-           $X1 = floor($X0+$X*$XSize)+$Padding;
-           $Y1 = floor($Y0+$Y*$YSize)+$Padding;
-           $X2 = floor($X0+$X*$XSize+$XSize);
-           $Y2 = floor($Y0+$Y*$YSize+$YSize);
-
-           if ( $X > 0 && $this->Points[$X-1][$Y] != UNKNOWN && $this->Points[$X-1][$Y] != IGNORED && $this->Points[$X-1][$Y] < $Threshold)
-              $this->pDraw->drawLine($X1,$Y1,$X1,$Y2,$Color);
-           if ( $Y > 0 && $this->Points[$X][$Y-1] != UNKNOWN && $this->Points[$X][$Y-1] != IGNORED && $this->Points[$X][$Y-1] < $Threshold)
-              $this->pDraw->drawLine($X1,$Y1,$X2,$Y1,$Color);
-           if ( $X < $this->GridSizeX && $this->Points[$X+1][$Y] != UNKNOWN && $this->Points[$X+1][$Y] != IGNORED && $this->Points[$X+1][$Y] < $Threshold)
-              $this->pDraw->drawLine($X2,$Y1,$X2,$Y2,$Color);
-           if ( $Y < $this->GridSizeY && $this->Points[$X][$Y+1] != UNKNOWN && $this->Points[$X][$Y+1] != IGNORED && $this->Points[$X][$Y+1] < $Threshold)
-              $this->pDraw->drawLine($X1,$Y2,$X2,$Y2,$Color);
-          }
-          }
-       }
+                if ( $value != UNKNOWN && $value != IGNORED && $value >= $threshold) {
+                    $x1 = floor($x0 + $x * $x_size ) + $format['Padding'];
+                    $y1 = floor($y0 + $y * $y_size ) + $format['Padding'];
+                    $x2 = floor($x0 + $x * $x_size + $x_size);
+                    $y2 = floor($y0 + $y * $y_size + $y_size);
+         
+                    if ( $x > 0 && $this->Points[$x-1][$y] != UNKNOWN && $this->Points[$x-1][$y] != IGNORED && $this->Points[$x-1][$y] < $threshold)
+                       $this->pDraw->drawLine($x1,$y1,$x1,$y2,$color);
+                    if ( $y > 0 && $this->Points[$x][$y-1] != UNKNOWN && $this->Points[$x][$y-1] != IGNORED && $this->Points[$x][$y-1] < $threshold)
+                       $this->pDraw->drawLine($x1,$y1,$x2,$y1,$color);
+                    if ( $x < $this->GridSizeX && $this->Points[$x+1][$y] != UNKNOWN && $this->Points[$x+1][$y] != IGNORED && $this->Points[$x+1][$y] < $threshold)
+                       $this->pDraw->drawLine($x2,$y1,$x2,$y2,$color);
+                    if ( $y < $this->GridSizeY && $this->Points[$x][$y+1] != UNKNOWN && $this->Points[$x][$y+1] != IGNORED && $this->Points[$x][$y+1] < $threshold)
+                       $this->pDraw->drawLine($x1,$y2,$x2,$y2,$color);
+                }
+            }
+        }
     }
 
-    /* Draw the surface chart */
-    function drawSurface($Format="")
-    {
-     $Palette		= isset($Format["Palette"]) ? $Format["Palette"] : null;
-     $ShadeR1		= isset($Format["ShadeR1"]) ? $Format["ShadeR1"] : 77;
-     $ShadeG1		= isset($Format["ShadeG1"]) ? $Format["ShadeG1"] : 205;
-     $ShadeB1		= isset($Format["ShadeB1"]) ? $Format["ShadeB1"] : 21;
-     $ShadeA1		= isset($Format["ShadeA1"]) ? $Format["ShadeA1"] : 40;
-     $ShadeR2		= isset($Format["ShadeR2"]) ? $Format["ShadeR2"] : 227;
-     $ShadeG2		= isset($Format["ShadeG2"]) ? $Format["ShadeG2"] : 135;
-     $ShadeB2		= isset($Format["ShadeB2"]) ? $Format["ShadeB2"] : 61;
-     $ShadeA2		= isset($Format["ShadeA2"]) ? $Format["ShadeA2"] : 100;
-     $Border		= isset($Format["Border"]) ? $Format["Border"] : false;
-     $BorderR		= isset($Format["BorderR"]) ? $Format["BorderR"] : 0;
-     $BorderG		= isset($Format["BorderG"]) ? $Format["BorderG"] : 0;
-     $BorderB		= isset($Format["BorderB"]) ? $Format["BorderB"] : 0;
-     $Surrounding	= isset($Format["Surrounding"]) ? $Format["Surrounding"] : -1;
-     $Padding		= isset($Format["Padding"]) ? $Format["Padding"] : 1;
+     /**
+      * Draw the surface chart
+      * @param array $format
+      */
+    function drawSurface($format = []) {
+        $default = [
+            "Palette" => null,
+            "ShadeR1" => 77,
+            "ShadeG1" => 205,
+            "ShadeB1" => 21,
+            "ShadeA1" => 40,
+            "ShadeR2" => 227,
+            "ShadeG2" => 135,
+            "ShadeB2" => 61,
+            "ShadeA2" => 100,
+            "Border" => false,
+            "BorderR" => 0,
+            "BorderG" => 0,
+            "BorderB" => 0,
+            "Surrounding" => -1,
+            "Padding" => 1,
+        ];
+        $format = array_merge($default, $format);
 
-     $X0    = $this->pDraw->GraphAreaX1;
-     $Y0    = $this->pDraw->GraphAreaY1;
-     $XSize = ($this->pDraw->GraphAreaX2 - $this->pDraw->GraphAreaX1) / ($this->GridSizeX+1);
-     $YSize = ($this->pDraw->GraphAreaY2 - $this->pDraw->GraphAreaY1) / ($this->GridSizeY+1);
+        $x0    = $this->pDraw->GraphAreaX1;
+        $y0    = $this->pDraw->GraphAreaY1;
+        $x_size = ($this->pDraw->GraphAreaX2 - $this->pDraw->GraphAreaX1) / ($this->GridSizeX+1);
+        $y_size = ($this->pDraw->GraphAreaY2 - $this->pDraw->GraphAreaY1) / ($this->GridSizeY+1);
 
-     for($X=0;$X<=$this->GridSizeX;$X++)
-       {
-        for($Y=0;$Y<=$this->GridSizeY;$Y++)
-          {
-        $Value = $this->Points[$X][$Y];
+        $default_palette = [
+            "R" => 0,
+            "G" => 0,
+            "B" => 0,
+            "Alpha" => 1000,
+        ];
+        $palette = $format['Palette'];
+        
 
-        if ( $Value != UNKNOWN && $Value != IGNORED )
-          {
-           $X1 = floor($X0+$X*$XSize)+$Padding;
-           $Y1 = floor($Y0+$Y*$YSize)+$Padding;
-           $X2 = floor($X0+$X*$XSize+$XSize);
-           $Y2 = floor($Y0+$Y*$YSize+$YSize);
-
-           if ( $Palette != null )
-              {
-              if ( isset($Palette[$Value]) && isset($Palette[$Value]["R"]) ) { $R = $Palette[$Value]["R"]; } else { $R = 0; }
-              if ( isset($Palette[$Value]) && isset($Palette[$Value]["G"]) ) { $G = $Palette[$Value]["G"]; } else { $G = 0; }
-              if ( isset($Palette[$Value]) && isset($Palette[$Value]["B"]) ) { $B = $Palette[$Value]["B"]; } else { $B = 0; }
-              if ( isset($Palette[$Value]) && isset($Palette[$Value]["Alpha"]) ) { $Alpha = $Palette[$Value]["Alpha"]; } else { $Alpha = 1000; }
-              }
-           else
-              {
-              $R = (($ShadeR2-$ShadeR1)/100)*$Value + $ShadeR1;
-              $G = (($ShadeG2-$ShadeG1)/100)*$Value + $ShadeG1;
-              $B = (($ShadeB2-$ShadeB1)/100)*$Value + $ShadeB1;
-              $Alpha = (($ShadeA2-$ShadeA1)/100)*$Value + $ShadeA1;
-              }
-
-           $Settings = array("R"=>$R,"G"=>$G,"B"=>$B,"Alpha"=>$Alpha);
-           if ( $Border ) { $Settings["BorderR"] = $BorderR; $Settings["BorderG"] = $BorderG; $Settings["BorderB"] = $BorderB; }
-           if ( $Surrounding != -1 ) { $Settings["BorderR"] = $R+$Surrounding; $Settings["BorderG"] = $G+$Surrounding; $Settings["BorderB"] = $B+$Surrounding; }
-
-           $this->pDraw->drawFilledRectangle($X1,$Y1,$X2-1,$Y2-1,$Settings);
-          }
-          }
-       }
+        for($x = 0; $x <= $this->GridSizeX; $x++) {
+            for($y = 0; $y <= $this->GridSizeY; $y++) {
+                $value = $this->Points[$x][$y];
+        
+                if ( $value != UNKNOWN && $value != IGNORED ) {
+                    $x1 = floor($x0 + $x * $x_size ) + $format['Padding'];
+                    $y1 = floor($y0 + $y * $y_size ) + $format['Padding'];
+                    $x2 = floor($x0 + $x * $x_size + $x_size);
+                    $y2 = floor($y0 + $y * $y_size + $y_size);
+                    
+                    $color = $default_palette;
+                    
+                    if ( $palette != null ) {
+                        if ( isset($palette[$value]) ) {
+                            $color = array_merge($default_palette, $palette[$value]);
+                        }
+                    } else {
+                        $color = [
+                            "R" => (($format['ShadeR2'] - $format['ShadeR1']) / 100) * $value + $format['ShadeR1'],
+                            "G" => (($format['ShadeG2'] - $format['ShadeG1']) / 100) * $value + $format['ShadeG1'],
+                            "B" => (($format['ShadeB2'] - $format['ShadeB1']) / 100) * $value + $format['ShadeB1'],
+                            "Alpha" => (($format['ShadeA2'] - $format['ShadeA1']) / 100) * $value + $format['ShadeA1'],
+                        ];
+                    }
+                    
+                    if ( $format['Boarder'] ) { 
+                        $color["BorderR"] = $format['BorderR']; 
+                        $color["BorderG"] = $format['BorderG']; 
+                        $color["BorderB"] = $format['BorderB']; 
+                    }
+                    if ( $format['Surrounding'] != -1 ) { 
+                        $color["BorderR"] = $color['R'] + $format['Surrounding']; 
+                        $color["BorderG"] = $color['G'] + $format['Surrounding']; 
+                        $color["BorderB"] = $color['B'] + $format['Surrounding']; 
+                    }
+                    
+                    $this->pDraw->drawFilledRectangle($x1, $y1,$x2 - 1,$y2 - 1, $color);
+                }
+            }
+        }
     }
 
-    /* Compute the missing points */
-    function computeMissing()
-    {
-     $Missing = "";
-     for($X=0;$X<=$this->GridSizeX;$X++)
-       {
-        for($Y=0;$Y<=$this->GridSizeY;$Y++)
-          {
-        if ( $this->Points[$X][$Y] == UNKNOWN )
-          $Missing[] = $X.",".$Y;
-          }
-       }
-     shuffle($Missing);
-     
-     foreach($Missing as $Key => $Pos)
-       {
-        $Pos = preg_split("/,/",$Pos);
-        $X    = $Pos[0];
-        $Y    = $Pos[1];
-
-        if ( $this->Points[$X][$Y] == UNKNOWN )
-          {
-        $NearestNeighbor = $this->getNearestNeighbor($X,$Y);
-
-        $Value = 0; $Points = 0;
-        for($Xi=$X-$NearestNeighbor;$Xi<=$X+$NearestNeighbor;$Xi++)
-          {
-           for($Yi=$Y-$NearestNeighbor;$Yi<=$Y+$NearestNeighbor;$Yi++)
-              {
-              if ($Xi >=0 && $Yi >= 0 && $Xi <= $this->GridSizeX && $Yi <= $this->GridSizeY && $this->Points[$Xi][$Yi] != UNKNOWN && $this->Points[$Xi][$Yi] != IGNORED)
-              {
-               $Value = $Value + $this->Points[$Xi][$Yi]; $Points++;
-              }
-              }
-          }
-
-        if ( $Points != 0 ) { $this->Points[$X][$Y] = $Value / $Points; }
-          }
-       }
+     /**
+      * Compute the missing points
+      */
+    function computeMissing() {
+        $missing = [];
+        for($x = 0; $x <= $this->GridSizeX; $x++) {
+            for($y = 0; $y <= $this->GridSizeY; $y++) {
+                if ( $this->Points[$x][$y] == UNKNOWN ){
+                    $missing[] = $x.",".$y;
+                }
+            }
+        }
+        
+        shuffle($missing);
+        
+        foreach($missing as $Key => $pos) {
+            $pos = preg_split("/,/",$pos);
+            $x    = $pos[0];
+            $y    = $pos[1];
+        
+            if ( $this->Points[$x][$y] == UNKNOWN ) {
+                $nearest_neighbor = $this->getNearestNeighbor($x,$y);
+                $value = 0; 
+                $points = 0;
+        
+                for($xi = $x - $nearest_neighbor; $xi <= $x + $nearest_neighbor; $xi++) {
+                    for($yi = $y - $nearest_neighbor; $yi <= $y + $nearest_neighbor; $yi++) {
+        
+                        if ($xi >=0 && $yi >= 0 && $xi <= $this->GridSizeX && $yi <= $this->GridSizeY && $this->Points[$xi][$yi] != UNKNOWN && $this->Points[$xi][$yi] != IGNORED) {
+                            $value = $value + $this->Points[$xi][$yi]; $points++;
+                        }
+                    }
+                }
+                
+                if ( $points != 0 ) { 
+                    $this->Points[$x][$y] = $value / $points; 
+                }
+            }
+        }
     }
 
-    /* Return the nearest Neighbor distance of a point */
-    function getNearestNeighbor($Xp,$Yp)
-    {
-     $Nearest = UNKNOWN;
-     for($X=0;$X<=$this->GridSizeX;$X++)
-       {
-        for($Y=0;$Y<=$this->GridSizeY;$Y++)
-          {
-        if ( $this->Points[$X][$Y] != UNKNOWN && $this->Points[$X][$Y] != IGNORED )
-          {
-           $DistanceX = max($Xp,$X)-min($Xp,$X);
-           $DistanceY = max($Yp,$Y)-min($Yp,$Y);
-           $Distance    = max($DistanceX,$DistanceY);
-           if ( $Distance < $Nearest || $Nearest == UNKNOWN ) { $Nearest = $Distance; }
-          }
-          }
-       }
-     return $Nearest;
+    /**
+    * Return the nearest Neighbor distance of a point
+    * @param $xp
+    * @param $yp
+    * 
+    * @return float|mixed
+    */
+    function getNearestNeighbor($xp, $yp) {
+        $nearest = UNKNOWN;
+        
+        for($x = 0; $x <= $this->GridSizeX; $x++) {
+            for($y = 0; $y <= $this->GridSizeY; $y++) {
+                if ( $this->Points[$x][$y] != UNKNOWN && $this->Points[$x][$y] != IGNORED ) {
+                    $distance_x = max($xp,$x)-min($xp,$x);
+                    $distance_y = max($yp,$y)-min($yp,$y);
+                    $distance    = max($distance_x,$distance_y);
+
+                    if ( $distance < $nearest || $nearest == UNKNOWN ) {
+                        $nearest = $distance;
+                    }
+                }
+            }
+        }
+
+        return $nearest;
     }
-    }
-?>
+}
